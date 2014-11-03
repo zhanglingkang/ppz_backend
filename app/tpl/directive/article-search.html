@@ -1,0 +1,89 @@
+<div id="article-search-zone">
+    <form class="form-inline" role="form" name="searchArticleFormValidation"
+          ng-submit="close=false;search(searchArticleFormValidation.$valid)" novalidate>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-xs-3">
+                    <div class="form-group">
+                        <!--<label for="title">文章标题&nbsp;</label>-->
+                        <input type="text" class="form-control" placeholder="文章标题" ng-model="searchForm.title"
+                               id="title"
+                               name="title"
+                                >
+                    </div>
+                </div>
+                <div class="col-xs-1">
+                    <button type="submit" class="btn btn-default">查询</button>
+                </div>
+            </div>
+        </div>
+    </form>
+    <hr/>
+    <div class="panel panel-default">
+        <div class="panel-heading text-center" ng-init="close=true;">
+            <label>文章列表<strong
+                    ng-show="searchResult.count>0">({{searchResult.count}})</strong></label>
+
+            <div class="btn-group btn-group-sm ">
+                <button type="button" class="btn " ng-class="{'btn-default':close,'btn-success':!close}"
+                        ng-click="close=false;">展开
+                </button>
+                <button type="button" class="btn " ng-class="{'btn-default':!close,'btn-success':close}"
+                        ng-click="close=true;">关闭
+                </button>
+            </div>
+        </div>
+        <div class="panel-body" ng-show="!close">
+            <table class="table table-bordered table-hover">
+                <thead>
+                <tr>
+                    <td>位置</td>
+                    <td>文章标题</td>
+                    <td>发布时间</td>
+                    <td>首图</td>
+                    <td>类型</td>
+                    <td>内容预览</td>
+                    <td>app个数</td>
+                    <td>是否排期</td>
+                </tr>
+                </thead>
+                <!--x-drag-sort="data-drag-id"-->
+                <tbody x-drag-completed="sortArticle">
+                <tr ng-show="searchStatus===SEARCH_STATUS.SEARCHING">
+                    <td colspan="8" class="text-center table-hint">努力加载中...</td>
+                </tr>
+                <tr ng-show="searchStatus===SEARCH_STATUS.SEARCH_SUCCESSED&&searchResult.articleList.length==0">
+                    <td colspan="8" class="text-center table-hint">查询结果为空</td>
+                </tr>
+                <tr ng-show="searchStatus===SEARCH_STATUS.SEARCH_FAILED">
+                    <td colspan="8" class="text-center table-hint">查询失败，请重新加载</td>
+                </tr>
+                <tr class="{{article.status}}" ng-repeat="article in searchResult.articleList"
+                    ng-click="selectArticle(article)">
+                    <td>{{$index+1}}</td>
+                    <td>{{article.title}}</td>
+                    <td>{{article.release_time}}</td>
+                    <td><img ng-src="{{article.first_pic}}" class="index-picture" x-view-img x-img-title="首图"/></td>
+                    <td>{{article.content}}</td>
+                    <td><span data-toggle="tooltip" data-placement="bottom" data-original-title="{{article.text}}"
+                              x-tooltip>{{article.text}}</span></td>
+                    <td>{{article.appTotal}}</td>
+                    <td><span ng-show="article.schedule">{{article.schedule}}</span><span
+                            ng-show="!article.schedule">无排期</span>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="panel-footer" ng-show="searchResult.articleList.length!=0&&!close">
+            <div style="position: relative;height: 70px;">
+                <x-pagination style="position: absolute;right: 20px;" x-pagination-scope="paginationScope">
+                </x-pagination>
+
+            </div>
+        </div>
+    </div>
+    <div class="added-list" ng-transclude>
+
+    </div>
+</div>

@@ -1,0 +1,210 @@
+<div id="app-search-zone">
+<form class="form-inline" role="form" ng-submit="filterApp()">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-3">
+                <div class="form-group">
+                    <label for="search_range">范围(排序):</label>
+                    <select class="form-control" name="range" id="search_range" ng-model="filter.range">
+                        <option value="s_newapp">入库日期</option>
+                        <option value="s_weekdlnum">周下载量</option>
+                        <option value="s_monthdlnum">月下载量</option>
+                        <option value="s_totaldlnum">总下载量</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-xs-3">
+                <div class="form-group">
+                    <label for="search_datelimit">入库日期:</label>
+                    <select class="form-control" name="search_datelimit" id="search_datelimit"
+                            ng-model="filter.date_limit">
+                        <option value="0">请选择</option>
+                        <option value="-3">3天内</option>
+                        <option value="-7">1周</option>
+                        <option value="-30">1个月</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-xs-3">
+                <div class="form-group">
+                    <label for="search_app_neworupd">——</label>
+                    <select class="form-control" name="search_app_neworupd" id="search_app_neworupd"
+                            ng-model="filter.neworupd">
+                        <option value="0">不限</option>
+                        <option value="s_updateapp">仅更新应用</option>
+                        <option value="s_newapp">仅新增应用</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-xs-3">
+                <div class="form-group">
+                    <label for="company_sign">企业签名</label>
+                    <select class="form-control" name="sign" id="company_sign"
+                            ng-model="filter.sign">
+                        <option value="">所有</option>
+                        <option value="company">企签</option>
+                        <option value="others ">非企签</option>
+                    </select>
+                </div>
+            </div>
+
+        </div>
+
+        <br/>
+
+        <div class="row">
+            <div class="col-xs-3">
+                <div class="form-group">
+                    <label for="search_count">应用个数</label>
+                    <select class="form-control" name="search_count" id="search_count" ng-model="filter.page_size">
+                        <option value="50">50</option>
+                        <option value="100">100</option>
+                        <option value="300">300</option>
+                        <option value="500">500</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-xs-4">
+                <div class="form-group">
+                    <label for="search_status">应用状态</label>
+                    <select class="form-control" name="search_status" id="search_status" ng-model="filter.status">
+                        <option value="1" selected="">仅发布态</option>
+                        <option value="12">发布态和测试态</option>
+                        <option value="124">发布态、测试态和下架态</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-xs-3">
+                <div class="form-group">
+                    <label for="search_apptag">应用分类</label>
+                    <select class="form-control" name="search_apptag" id="search_apptag" ng-model="filter.app_tag">
+                        <option value="0" selected="">全部</option>
+                        <option value="1">游戏</option>
+                        <option value="2">应用</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-xs-1 col-xs-offset-1">
+                <button type="submit" class="btn btn-default">筛选</button>
+            </div>
+        </div>
+    </div>
+</form>
+<hr/>
+<form class="form-inline" ng-submit="searchApp()" role="form" id="app-search-form">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-3">
+                <div class="form-group">
+                    <label for="searchMethod">查找方式:</label>
+                    <select class="form-control" name="method" ng-model="search.method"
+                            id="searchMethod">
+                        <option value="APPNAME">应用名称</option>
+                        <option value="APPID">应用ID</option>
+                        <option value="KID">数字ID</option>
+                        <option value="APPDEVELOPER">开发商</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-xs-4">
+                <div class="form-group">
+                    <label for="app_name_txt" class="sr-only">关键字:</label>
+                    <input class="form-control" name="keywords" placeholder="关键字"
+                           ng-model="search.keywords" title="关键字不能为空"
+                           id="app_name_txt"/>
+                </div>
+            </div>
+            <div class="col-xs-4">
+                <div class="form-group">
+                    <label for="search_status1">应用状态</label>
+                    <select class="form-control" name="status" ng-model="search.status"
+                            id="search_status1">
+                        <option value="1">仅发布态</option>
+                        <option value="12">发布态和测试态</option>
+                        <option value="124">发布态、测试态和下架态</option>
+                    </select>
+
+                </div>
+            </div>
+            <div class="col-xs-1">
+                <button type="submit" class="btn btn-default">查找</button>
+            </div>
+
+        </div>
+    </div>
+</form>
+<hr/>
+<div class="panel panel-default" id="search-result-panel">
+    <div class="panel-heading text-center">
+        查询结果<strong ng-show="searchResult.count>0">({{searchResult.count}})</strong>
+
+        <div class="btn-group btn-group-sm ">
+            <button type="button" class="btn {{open}}" ng-click="setPanelOpen()">展开</button>
+            <button type="button" class="btn {{close}}" ng-click="setPanelClose()">关闭</button>
+        </div>
+    </div>
+    <div class="panel-body {{hide}}">
+        <table class="table table-head">
+            <thead>
+            <tr>
+                <th>序号</th>
+                <th>ICON</th>
+                <th>应用名称</th>
+                <th>应用状态</th>
+                <th>分类</th>
+                <th>价格</th>
+                <th>更新日期</th>
+            </tr>
+            </thead>
+        </table>
+        <x-alert
+                style="position:fixed;left:0;right:0;bottom:0;min-height: 100px;margin-bottom: 0;"
+                x-show="alertShow" x-show-type="alertType" x-no-auto-hide="noAutoHide">
+            <p class="text-center"><strong>{{alertContent}}</strong></p>
+        </x-alert>
+        <div class="search-result">
+
+            <table class="table table-hover table-bordered">
+                <tbody>
+                <tr ng-show="searchStatus===SEARCH_STATUS.SEARCHING">
+                    <td colspan="7" class="text-center table-hint">努力加载中...</td>
+                </tr>
+                <tr ng-show="searchStatus===SEARCH_STATUS.SEARCH_SUCCESSED&&searchResult.apps.length==0">
+                    <td colspan="7" class="text-center table-hint">查询结果为空</td>
+                </tr>
+                <tr ng-show="searchStatus===SEARCH_STATUS.SEARCH_FAILED">
+                    <td colspan="7" class="text-center table-hint">查询失败，请重新加载</td>
+                </tr>
+                <tr class="{{app.status}}" ng-repeat="app in searchResult.apps" ng-click="selectApp(app)"
+                        >
+                    <td class="order-col">{{app.order}}</td>
+                    <td class="img-col"><img ng-src="{{app.imgSrc}}"/></td>
+                    <td class="name-col" data-original-title="{{app.APPNAME}}" data-toggle="tooltip"
+                        data-placement="bottom">{{app.APPNAME}}
+                    </td>
+                    <td class="status-col">{{app.appStatus}}</td>
+                    <td class="category-col">{{app.categoryName}}</td>
+                    <td class="price-col">{{app.APPPRICE}}</td>
+                    <td class="update-time-col">{{app.APPUPDATETIME*1000 | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                </tr>
+                </tbody>
+            </table>
+
+        </div>
+
+    </div>
+    <div class="panel-footer {{hide}}" ng-show="searchResult.apps.length!=0">
+        <div style="position: relative;height: 70px;">
+            <x-pagination style="position: absolute;right: 20px;" x-pagination-scope="paginationScope">
+            </x-pagination>
+
+        </div>
+    </div>
+</div>
+<div class="added-list" ng-transclude>
+
+</div>
+<template id="alert-template">
+
+</template>
+</div>

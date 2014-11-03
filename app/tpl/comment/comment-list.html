@@ -1,0 +1,105 @@
+<hr/>
+<div class="panel panel-info">
+    <div class="panel-heading text-center">
+        <label>评论列表</label></div>
+    <div class="panel-body">
+        <table class="table table-bordered table-hover">
+            <thead>
+            <tr class="text">
+                <td>序号</td>
+                <td>餐厅名称</td>
+                <td>评论内容</td>
+                <td>评论人</td>
+                <td>评价</td>
+                <td>评论类型</td>
+                <td>操作</td>
+            </tr>
+            </thead>
+            <!--x-drag-sort="data-drag-id" x-drag-completed="sortTopic"-->
+            <tbody>
+            <!--<tr ng-show="getRestaurantListStatus===REQUEST_STATUS.REQUESTING">-->
+            <!--<td colspan="10" class="text-center table-hint">努力加载中...</td>-->
+            <!--</tr>-->
+            <!--<tr ng-show="getRestaurantListStatus===REQUEST_STATUS.REQUEST_SUCCESSED&&searchResult.topicList.length==0">-->
+            <!--<td colspan="10" class="text-center table-hint">查询结果为空</td>-->
+            <!--</tr>-->
+            <!--<tr ng-show="getRestaurantListStatus===REQUEST_STATUS.REQUEST_FAILED">-->
+            <!--<td colspan="10" class="text-center table-hint">查询失败，请重新加载</td>-->
+            <!--</tr>-->
+            <tr ng-repeat="topic in searchResult.topicList" data-drag-id="{{topic.id}}">
+                <td>{{topic.position}}</td>
+                <td>{{topic.title}}</td>
+                <td>{{topic.introduce}}</td>
+                <td>{{topic.status}}</td>
+                <td>{{topic.release_time}}</td>
+                <td>{{topic.create_account}}</td>
+                <td>{{topic.create_time}}</td>
+                <td>{{topic.modify_account}}</td>
+                <td>{{topic.modify_time}}</td>
+                <td>
+                    <div class="btn-group btn-group-sm">
+                        <a type="button" class="btn btn-default"
+                           title="锁定确认"
+                           x-selector="#topic-lock-form"
+                           x-popover
+                           x-close="deletePopover"
+                           x-style="width:200px;height:100px;"
+                           data-placement="left"
+                           ng-hide="topic.position_lock==1"
+                                >锁定至
+                        </a>
+                        <a type="button" class="btn btn-default"
+                           ng-click="moveUp(topic.id,topic.position)" ng-show="topic.position_lock!=1">上移
+                        </a>
+                        <a type="button" class="btn btn-default"
+                           ng-click="moveDown(topic.id,topic.position)" ng-show="topic.position_lock!=1">下移
+                        </a>
+                        <a type="button" class="btn btn-default"
+                           ng-click="unlock(topic.id)" ng-show="topic.position_lock==1">解锁
+                        </a>
+                        <a type="button" class="btn btn-default"
+                           ng-href="#/topic/topic-add/{{topic.id}}">编辑
+                        </a>
+                        <a type="button" class="btn btn-default"
+                           ng-click="deleteTopic(topic.id)"
+                           x-confirm-hint
+                           x-modal-title="删除专题"
+                           x-modal-content="确认删除吗？">
+                            删除
+                        </a>
+                        <a type="button" class="btn btn-default"
+                           ng-click="pushToFrontEnd(topic.id)">
+                            刷至前端
+                        </a>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="panel-footer" ng-show="searchResult.topicList.length!=0">
+        <div style="position: relative;height: 70px;">
+            <x-pagination style="position: absolute;right: 20px;" x-pagination-scope="paginationScope">
+            </x-pagination>
+
+        </div>
+    </div>
+</div>
+</div>
+<template id="topic-lock-form" class="hide">
+    <form class="form-horizontal" name="lockPositionFormValidation"
+          ng-submit="lockPosition(lockPositionFormValidation.$valid,this)" novalidate="">
+        <div class="form-group"
+             ng-class="{'has-error':lockPositionFormValidation.lockPosition.$invalid&&lockPositionSubmitted,'has-success':lockPositionFormValidation.lockPosition.$valid&&lockPositionSubmitted}">
+            <div class="col-xs-12">
+                <input class="form-control" placeholder="专题锁定位置" type="number" ng-model="topic.lockPosition"
+                       name="lockPosition" required/>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-8">
+                <button type="submit" class="btn btn-default">确定</button>
+            </div>
+        </div>
+    </form>
+</template>

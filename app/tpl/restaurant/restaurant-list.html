@@ -1,0 +1,150 @@
+<!--<form class="form-inline" role="form" name="searchTopicFormValidation"-->
+<!--ng-submit="search()">-->
+<!--<div class="row">-->
+<!--<div class="col-xs-5">-->
+<!--<div class="form-group"-->
+<!--ng-class="{'has-error':searchTopicFormValidation.status.$invalid&&submitted,'has-success':searchTopicFormValidation.status.$valid&&submitted}">-->
+<!--<label class="control-label" for="status">专题状态&nbsp;</label>-->
+<!--&lt;!&ndash;<input type="date" class="form-control" id="date" placeholder="选择查看日期">&ndash;&gt;-->
+<!--<select class="form-control" name="status" ng-model="searchForm.status"-->
+<!--id="status">-->
+<!--<option value="">全部</option>-->
+<!--<option value="4">等待发布</option>-->
+<!--<option value="1">发布中</option>-->
+<!--<option value="3">草稿</option>-->
+<!--&lt;!&ndash;<option value="4">草稿</option>&ndash;&gt;-->
+<!--</select>-->
+<!--</div>-->
+<!--</div>-->
+<!--<div class="col-xs-5">-->
+<!--<div class="form-group">-->
+<!--<label for="title">专题名称&nbsp;</label>-->
+<!--<input type="text" class="form-control" placeholder="专题名称" ng-model="searchForm.title" id="title">-->
+<!--</div>-->
+<!--</div>-->
+<!--<div class="col-xs-2">-->
+<!--<button type="submit" class="btn btn-primary">查询</button>-->
+<!--<a class="btn btn-primary" ng-click="importTopic()" ng-disabled="loading"><span-->
+<!--ng-show="!loading">导入</span> <span-->
+<!--ng-show="loading">导入中...</span></a>-->
+<!--</div>-->
+<!--</div>-->
+<!--</form>-->
+<hr/>
+<div class="panel panel-info">
+    <div class="panel-heading text-center">
+        <label>餐厅列表</label></div>
+    <!--<span ng-show="topicList.length!=0">（{{boutique.status}}）</span>-->
+    <div class="panel-body">
+        <table class="table table-bordered table-hover">
+            <thead>
+            <tr class="text">
+                <td>序号</td>
+                <td>餐厅图标</td>
+                <td>餐厅介绍图片</td>
+                <td>餐厅名称</td>
+                <td>营业执照图片</td>
+                <td>法人代表</td>
+                <td>法人代表电话</td>
+                <td>负责人</td>
+                <td>负责人电话</td>
+                <td>餐厅描述</td>
+                <td>电话</td>
+                <td>邮件</td>
+                <td>网址</td>
+                <td>地址</td>
+                <td>市</td>
+                <td>省</td>
+                <td>邮编</td>
+                <td>注册日期</td>
+                <td>操作</td>
+            </tr>
+            </thead>
+            <!--x-drag-sort="data-drag-id" x-drag-completed="sortTopic"-->
+            <tbody>
+            <!--<tr ng-show="getRestaurantListStatus===REQUEST_STATUS.REQUESTING">-->
+                <!--<td colspan="10" class="text-center table-hint">努力加载中...</td>-->
+            <!--</tr>-->
+            <!--<tr ng-show="getRestaurantListStatus===REQUEST_STATUS.REQUEST_SUCCESSED&&searchResult.topicList.length==0">-->
+                <!--<td colspan="10" class="text-center table-hint">查询结果为空</td>-->
+            <!--</tr>-->
+            <!--<tr ng-show="getRestaurantListStatus===REQUEST_STATUS.REQUEST_FAILED">-->
+                <!--<td colspan="10" class="text-center table-hint">查询失败，请重新加载</td>-->
+            <!--</tr>-->
+            <tr ng-repeat="topic in searchResult.topicList" data-drag-id="{{topic.id}}">
+                <td>{{topic.position}}</td>
+                <td>{{topic.title}}</td>
+                <td>{{topic.introduce}}</td>
+                <td>{{topic.status}}</td>
+                <td>{{topic.release_time}}</td>
+                <td>{{topic.create_account}}</td>
+                <td>{{topic.create_time}}</td>
+                <td>{{topic.modify_account}}</td>
+                <td>{{topic.modify_time}}</td>
+                <td>
+                    <div class="btn-group btn-group-sm">
+                        <a type="button" class="btn btn-default"
+                           title="锁定确认"
+                           x-selector="#topic-lock-form"
+                           x-popover
+                           x-close="deletePopover"
+                           x-style="width:200px;height:100px;"
+                           data-placement="left"
+                           ng-hide="topic.position_lock==1"
+                                >锁定至
+                        </a>
+                        <a type="button" class="btn btn-default"
+                           ng-click="moveUp(topic.id,topic.position)" ng-show="topic.position_lock!=1">上移
+                        </a>
+                        <a type="button" class="btn btn-default"
+                           ng-click="moveDown(topic.id,topic.position)" ng-show="topic.position_lock!=1">下移
+                        </a>
+                        <a type="button" class="btn btn-default"
+                           ng-click="unlock(topic.id)" ng-show="topic.position_lock==1">解锁
+                        </a>
+                        <a type="button" class="btn btn-default"
+                           ng-href="#/topic/topic-add/{{topic.id}}">编辑
+                        </a>
+                        <a type="button" class="btn btn-default"
+                           ng-click="deleteTopic(topic.id)"
+                           x-confirm-hint
+                           x-modal-title="删除专题"
+                           x-modal-content="确认删除吗？">
+                            删除
+                        </a>
+                        <a type="button" class="btn btn-default"
+                           ng-click="pushToFrontEnd(topic.id)">
+                            刷至前端
+                        </a>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="panel-footer" ng-show="searchResult.topicList.length!=0">
+        <div style="position: relative;height: 70px;">
+            <x-pagination style="position: absolute;right: 20px;" x-pagination-scope="paginationScope">
+            </x-pagination>
+
+        </div>
+    </div>
+</div>
+</div>
+<template id="topic-lock-form" class="hide">
+    <form class="form-horizontal" name="lockPositionFormValidation"
+          ng-submit="lockPosition(lockPositionFormValidation.$valid,this)" novalidate="">
+        <div class="form-group"
+             ng-class="{'has-error':lockPositionFormValidation.lockPosition.$invalid&&lockPositionSubmitted,'has-success':lockPositionFormValidation.lockPosition.$valid&&lockPositionSubmitted}">
+            <div class="col-xs-12">
+                <input class="form-control" placeholder="专题锁定位置" type="number" ng-model="topic.lockPosition"
+                       name="lockPosition" required/>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-8">
+                <button type="submit" class="btn btn-default">确定</button>
+            </div>
+        </div>
+    </form>
+</template>

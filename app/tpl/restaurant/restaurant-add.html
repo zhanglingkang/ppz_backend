@@ -1,0 +1,223 @@
+<form class=" col-xs-10" role="form" id="restaurant-add-form" name="restaurantFormValidation" x-form-reset
+      x-reset="formReset"
+      ng-submit="addRestaurant(restaurantFormValidation)"
+      novalidate>
+    <div class="col-xs-6">
+        <label for="name" class="control-label">餐厅名称</label>
+            <input type="input" ng-model="restaurantForm.title" class="form-control" id="name" placeholder="餐厅名称"
+                   required="required" name="name">
+
+            <div ng-show="restaurantFormValidation.name.$error.required&&submitted"
+               class="alert">
+                餐厅名称不能为空</div>
+
+            <!--<p ng-show="(restaurantFormValidation.title.$error.minlength||restaurantFormValidation.title.$error.maxlength)&&submitted"-->
+            <!--class="help-block">-->
+            <!--专题名称为5-15个字符长度</p>-->
+    </div>
+    <div class="col-xs-3">
+        <label for="email" class=" control-label">邮件</label>
+
+        <input type="input" ng-model="restaurantForm.email" class="form-control" id="email" placeholder="邮件"
+               required="required" name="email">
+        <div ng-show="restaurantFormValidation.email.$error.required&&submitted"
+             class="alert">
+            邮件不能为空</div>
+        <!--<p ng-show="(restaurantFormValidation.title.$error.minlength||restaurantFormValidation.title.$error.maxlength)&&submitted"-->
+        <!--class="help-block">-->
+        <!--专题名称为5-15个字符长度</p>-->
+    </div>
+    <div class="col-xs-3">
+        <label for="web" class=" control-label">网址</label>
+        <input type="url" ng-model="restaurantForm.email" class="form-control" id="web" placeholder="网址"
+               required="required" name="web">
+        <div ng-show="restaurantFormValidation.web.$error.required&&submitted"
+             class="help-block">
+            网址不能为空</div>
+
+        <!--<p ng-show="(restaurantFormValidation.title.$error.minlength||restaurantFormValidation.title.$error.maxlength)&&submitted"-->
+        <!--class="help-block">-->
+        <!--专题名称为5-15个字符长度</p>-->
+    </div>
+    <hr class="space" />
+    <div class="col-xs-12">
+        <label for="name" class=" control-label">餐厅描述</label>
+
+        <input type="input" ng-model="restaurantForm.description" class="form-control" id="description" placeholder="餐厅描述"
+               required="required" name="description">
+
+        <div ng-show="restaurantFormValidation.description.$error.required&&submitted"
+             class="alert">
+            餐厅描述不能为空</div>
+
+        <!--<p ng-show="(restaurantFormValidation.title.$error.minlength||restaurantFormValidation.title.$error.maxlength)&&submitted"-->
+        <!--class="help-block">-->
+        <!--专题名称为5-15个字符长度</p>-->
+    </div>
+    <hr class="space" />
+    <div class="col-xs-6">
+        <label for="imageLinkThumbnail" class=" control-label">餐厅图标40*40px</label>
+            <!--<input type="file"  name="imageLinkThumbnail" id="imageLinkThumbnail"-->
+                   <!--data-preview-img="#index-pic-preview-img"-->
+                   <!--x-file-type="image" x-img-size="1340*480" ng-model="restaurantForm.xxxx">-->
+            <input type="file"  name="imageLinkThumbnail" id="imageLinkThumbnail"
+                   data-preview-img="#thumbnail-preview-img"
+                     >
+            <!--这里ng-model并不实际绑定哪个字段，写ng-model是为了表单校验对象中包含imageFile-->
+
+
+            <!--<p ng-show="restaurantFormValidation.imageLinkThumbnail.$error.required&&submitted"-->
+               <!--class="help-block">-->
+                <!--餐厅图标不能为空</p>-->
+
+            <!--<p ng-show="restaurantFormValidation.imageLinkThumbnail.$error.fileType&&submitted"-->
+               <!--class="help-block">-->
+                <!--请选择图片文件</p>-->
+
+            <!--<p ng-show="restaurantFormValidation.imageLinkThumbnail.$error.imgSize&&submitted"-->
+               <!--class="help-block">-->
+                <!--请选择40*40px的图片</p>-->
+    </div>
+    <div class="col-xs-6">
+        <img class="preview" id="thumbnail-preview-img" ng-src="{{restaurant.indexPicUrl}}" x-clear-img x-clear="imgClear"
+                alt="点击我预览大图" x-view-img x-img-title="餐厅图标"/>
+    </div>
+    <hr class="space" />
+    <div class="col-xs-6">
+        <label for="imageLinkPoster" class=" control-label">餐厅介绍图片n*npx</label>
+
+            <input type="file"  name="imageLinkPoster" id="imageLinkPoster"
+                   data-preview-img="#poster-preview-img"
+                    >
+            <!--这里ng-model并不实际绑定哪个字段，写ng-model是为了表单校验对象中包含imageFile-->
+
+
+            <!--<p ng-show="restaurantFormValidation.imageLinkThumbnail.$error.required&&submitted"-->
+            <!--class="help-block">-->
+            <!--餐厅图标不能为空</p>-->
+
+            <!--<p ng-show="restaurantFormValidation.imageLinkThumbnail.$error.fileType&&submitted"-->
+            <!--class="help-block">-->
+            <!--请选择图片文件</p>-->
+
+            <!--<p ng-show="restaurantFormValidation.imageLinkThumbnail.$error.imgSize&&submitted"-->
+            <!--class="help-block">-->
+            <!--请选择40*40px的图片</p>-->
+    </div>
+    <div class="col-xs-6">
+        <img id="poster-preview-img"  class="preview" ng-src="{{restaurant.indexPicUrl}}" x-clear-img x-clear="imgClear"
+             alt="点击我预览大图" x-view-img x-img-title="餐厅介绍图片"/>
+    </div>
+    <hr class="space" />
+    <div class="col-xs-6">
+        <label for="imageLinkPoster" class=" control-label">营业执照图片n*npx</label>
+
+           
+            <input type="file"  name="imageLinkBusiness" id="imageLinkBusiness"
+                   data-preview-img="#business-preview-img"
+                     >
+            <!--这里ng-model并不实际绑定哪个字段，写ng-model是为了表单校验对象中包含imageFile-->
+
+
+            <!--<p ng-show="restaurantFormValidation.imageLinkThumbnail.$error.required&&submitted"-->
+            <!--class="help-block">-->
+            <!--餐厅图标不能为空</p>-->
+
+            <!--<p ng-show="restaurantFormValidation.imageLinkThumbnail.$error.fileType&&submitted"-->
+            <!--class="help-block">-->
+            <!--请选择图片文件</p>-->
+
+            <!--<p ng-show="restaurantFormValidation.imageLinkThumbnail.$error.imgSize&&submitted"-->
+            <!--class="help-block">-->
+            <!--请选择40*40px的图片</p>-->
+    </div>
+    <div class="col-xs-6">
+        <img  class="preview" id="business-preview-img" ng-src="{{restaurant.indexPicUrl}}" x-clear-img x-clear="imgClear"
+             alt="点击我预览大图" x-view-img x-img-title="营业执照图片"/>
+    </div>
+    <hr class="space" />
+    <div class="col-xs-6">
+        <label for="legalPerson" class=" control-label">法人代表</label>
+
+            <input type="input" ng-model="restaurantForm.legalPerson" class="form-control" id="legalPerson" placeholder="法人代表"
+                   required="required" name="legalPerson">
+
+            <p ng-show="restaurantFormValidation.legalPerson.$error.required&&submitted"
+               class="help-block">
+                法人代表不能为空</p>
+
+            <!--<p ng-show="(restaurantFormValidation.title.$error.minlength||restaurantFormValidation.title.$error.maxlength)&&submitted"-->
+            <!--class="help-block">-->
+            <!--专题名称为5-15个字符长度</p>-->
+    </div>
+    <div class="col-xs-6">
+        <label for="legalPersonPhone" class=" control-label">法人代表电话</label>
+
+            <input type="input" ng-model="restaurantForm.legalPersonPhone" class="form-control" id="legalPersonPhone" placeholder="法人代表电话"
+                   required="required" name="legalPersonPhone">
+
+            <p ng-show="restaurantFormValidation.legalPersonPhone.$error.required&&submitted"
+               class="help-block">
+                法人代表电话不能为空</p>
+
+            <!--<p ng-show="(restaurantFormValidation.title.$error.minlength||restaurantFormValidation.title.$error.maxlength)&&submitted"-->
+            <!--class="help-block">-->
+            <!--专题名称为5-15个字符长度</p>-->
+    </div>
+    <hr class="space" />
+    <div class="col-xs-6">
+        <label for="dutyPerson" class=" control-label">负责人</label>
+
+            <input type="input" ng-model="restaurantForm.dutyPerson" class="form-control" id="dutyPerson" placeholder="负责人"
+                   required="required" name="dutyPerson">
+
+            <p ng-show="restaurantFormValidation.dutyPerson.$error.required&&submitted"
+               class="help-block">
+                负责人不能为空</p>
+
+            <!--<p ng-show="(restaurantFormValidation.title.$error.minlength||restaurantFormValidation.title.$error.maxlength)&&submitted"-->
+            <!--class="help-block">-->
+            <!--专题名称为5-15个字符长度</p>-->
+    </div>
+    <div class="col-xs-6">
+        <label for="legalPersonPhone" class=" control-label">负责人电话</label>
+
+            <input type="input" ng-model="restaurantForm.dutyPersonPhone" class="form-control" id="dutyPersonPhone" placeholder="负责人电话"
+                   required="required" name="dutyPersonPhone">
+
+            <p ng-show="restaurantFormValidation.dutyPersonPhone.$error.required&&submitted"
+               class="help-block">
+               负责人电话不能为空</p>
+
+            <!--<p ng-show="(restaurantFormValidation.title.$error.minlength||restaurantFormValidation.title.$error.maxlength)&&submitted"-->
+            <!--class="help-block">-->
+            <!--专题名称为5-15个字符长度</p>-->
+    </div>
+    <hr class="space" />
+    <div class="col-xs-8">
+        <label class="control-label">地址</label>
+        <input class="form-control" placeholder="地址" ng-model="newInfo.address.street"  />
+    </div>
+    <div class="col-xs-1">
+        <label class="control-label">市</label>
+        <input class="form-control" placeholder="地址" ng-model="newInfo.address.city"  />
+    </div>
+    <div class="col-xs-1">
+        <label class="control-label">省</label>
+        <input class="form-control" placeholder="地址" ng-model="newInfo.address.state"  />
+    </div>
+    <div class="col-xs-2">
+        <label class="control-label">邮编</label>
+        <input class="form-control" placeholder="地址" ng-model="newInfo.address.zipcode"  />
+    </div>
+    <hr class="space" />
+</form>
+<hr class="space" />
+<div class="col-xs-12">
+    <div class="">
+        <button type="submit" class="btn btn-info" form="restaurant-add-form"
+                x-submitting="发布中..." x-is-submitting="publishing">
+            注册
+        </button>
+    </div>
+</div>

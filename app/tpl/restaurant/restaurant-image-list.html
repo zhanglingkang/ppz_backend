@@ -1,0 +1,32 @@
+<hr/>
+<div class="panel panel-info">
+    <div class="panel-heading text-center">
+        <label>餐厅图片列表</label></div>
+    <div class="panel-body">
+    </div>
+    <div class="panel-footer" ng-show="searchResult.topicList.length!=0">
+        <div style="position: relative;height: 70px;">
+            <x-pagination style="position: absolute;right: 20px;" x-pagination-scope="paginationScope">
+            </x-pagination>
+
+        </div>
+    </div>
+</div>
+</div>
+<template id="topic-lock-form" class="hide">
+    <form class="form-horizontal" name="lockPositionFormValidation"
+          ng-submit="lockPosition(lockPositionFormValidation.$valid,this)" novalidate="">
+        <div class="form-group"
+             ng-class="{'has-error':lockPositionFormValidation.lockPosition.$invalid&&lockPositionSubmitted,'has-success':lockPositionFormValidation.lockPosition.$valid&&lockPositionSubmitted}">
+            <div class="col-xs-12">
+                <input class="form-control" placeholder="专题锁定位置" type="number" ng-model="topic.lockPosition"
+                       name="lockPosition" required/>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-8">
+                <button type="submit" class="btn btn-default">确定</button>
+            </div>
+        </div>
+    </form>
+</template>

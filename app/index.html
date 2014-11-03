@@ -1,0 +1,128 @@
+<!doctype html >
+<!--manifest="http://ipadbms.kuaiyong.com/protected/views/template/bmsIPad.appcache"-->
+<html lang="zh-CN"
+      ng-controller="appInfoCtrl">
+<head>
+    <meta charset='utf-8'>
+    <title ng-bind="name"></title>
+
+    <!--<link rel="stylesheet" href="http://docs.bootcss.com/bootstrap-2.3.2/docs/assets/css/bootstrap.css" media="all"/>-->
+    <!--<link rel="stylesheet" href="http://js.wanmeiyueyu.com/public/bootstrap/3.2.0/css/bootstrap.min.css" media="all"/>-->
+    <link data-remove rel="stylesheet" href="css/bootstrap.min.css" media="all"/>
+    <!--<link data-remove rel="stylesheet" href="css/bootstrap.simplex.min.css" media="all"/>-->
+    <link data-remove rel="stylesheet" href="css/bootstrap-datetimepicker.min.css"
+          media="all">
+    <!--<link data-remove rel="stylesheet" href="http://js.wanmeiyueyu.com/bms-kyipad/css/editor.css" media="all"/>-->
+    <link data-remove rel="stylesheet" href="css/font-awesome.css" media="all"/>
+    <link data-remove rel="stylesheet" href="css/base.css">
+    <link data-remove data-replace rel="stylesheet" href="css/app.css">
+    <style type="text/css">
+        .ng-cloak {
+            display: none;
+        }
+    </style>
+</head>
+
+<body class="ng-cloak" x-delete-date-picker>
+
+<header>
+
+    <nav class="navbar navbar-default" role="navigation">
+
+        <div class="container-fluid">
+
+            <div class="navbar-header">
+                <a class="navbar-brand">{{name}}</a>
+            </div>
+
+            <div class="collapse navbar-collapse">
+
+                <ul class="nav navbar-nav">
+                    <li ng-repeat="module in modules" class="{{module.active}}"><a
+                            href="#{{module.action}}">{{module.name}}</a></li>
+                </ul>
+
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{user}}<span
+                                class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a ng-click="logout()">退出系统</a></li>
+                        </ul>
+                    </li>
+                </ul>
+
+            </div>
+            <!-- /.navbar-collapse -->
+
+        </div>
+        <!-- /.container-fluid -->
+
+    </nav>
+
+</header>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-2">
+            <ul class="nav nav-pills nav-stacked" role="tablist">
+                <li ng-repeat="page in pages" class="{{page.active}}"><a
+                        href="#{{page.action}}">{{page.name}}</a></li>
+            </ul>
+        </div>
+        <div class="col-md-10" role="main">
+            <div ng-view id="view"></div>
+        </div>
+    </div>
+</div>
+<x-alert
+        style="position:fixed;left:0;right:0;bottom:0;min-height: 100px;margin-bottom: 0;z-index: 100;"
+        x-show="alertShow" x-show-type="alertType" x-no-auto-hide="noAutoHide">
+    <p class="text-center"><strong>{{alertContent}}</strong></p>
+</x-alert>
+<div class="modal" id="modal-hint" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
+                        class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="myModalLabel"></h4>
+            </div>
+            <div class="modal-body">
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary confirm">确定</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade bs-example-modal-lg" id="modal-view-img" tabindex="-1" role="dialog" aria-hidden="true"
+     style="text-align: center;">
+    <div class="modal-dialog modal-lg" style="display: inline-block;width:auto;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
+                        class="sr-only">Close</span></button>
+                <h4 class="modal-title"></h4>
+            </div>
+            <div class="modal-body">
+                <img/>
+            </div>
+        </div>
+    </div>
+</div>
+<footer></footer>
+<script data-remove src="bower_components/seajs/dist/sea-debug.js"></script>
+<script data-remove src="bower_components/angularjs/angular.js"></script>
+<script data-remove src="bower_components/angularjs/angular-route.js"></script>
+<script data-remove src="bower_components/jquery/dist/jquery.js"></script>
+<script data-remove src="bower_components/jquery/dist/hotkeys.js"></script>
+<script data-remove src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<script data-remove src="bower_components/bootstrap/dist/js/bootstrap-datetimepicker.js"></script>
+<script data-remove src="bower_components/bootstrap/dist/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>
+<script data-remove src="js/seajs-config.js"></script>
+<script data-remove src="js/seajs-run.js"></script>
+</body>
+</html>

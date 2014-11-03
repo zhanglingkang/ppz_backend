@@ -1,0 +1,48 @@
+/**跨系统*/
+.ell {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+/*本系统*/
+.alert {
+    z-index: 10;
+}
+
+[ng-view] table {
+    table-layout: fixed;
+}
+
+[ng-view] table td {
+    word-wrap: break-word;
+}
+
+a.thumbnail.active {
+    border-width: 4px;
+}
+
+a {
+    cursor: pointer;
+}
+
+.panel-heading .btn-group {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    margin-top: -15px;
+}
+
+.panel-heading, .panel-body {
+    position: relative;
+}
+
+.table-hint {
+    font-size: 18px;
+    font-weight: 700;
+}
+
+img.preview{
+    width: 80px;
+    height: 60px;
+}
