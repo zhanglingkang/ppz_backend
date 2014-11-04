@@ -1,0 +1,90 @@
+<hr class="space"/>
+<div class="row" ng-controller="loginCtrl">
+    <div class="jumbotron col-xs-4 col-xs-offset-4">
+        <div class="form-group">登入</div>
+        <form name="loginFormValidation" novalidate="" ng-submit="login(loginFormValidation.$valid)">
+            <div class="form-group">
+                <label>用户名</label>
+                <input ng-model="userName" name="userName" placeholder="username" class="form-control" required=""/>
+                <hr class="space" />
+                 <div class="alert alert-danger alert-dismissible fade in login-hint" role="alert"
+                    ng-show="submitted&&loginFormValidation.userName.$error.required" >
+                   <strong>用户名不能为空</strong>
+                 </div>
+            </div>
+            <div class="form-group">
+                <label>密码</label>
+                <input ng-model="password" type="password" placeholder="password" name="password" class="form-control" required/>
+                <hr class="space" />
+                 <div class="alert alert-danger alert-dismissible fade in login-hint" role="alert"
+                    ng-show="submitted&&loginFormValidation.password.$error.required" >
+                   <strong>密码不能为空</strong>
+                 </div>
+            </div>
+            <button type="submit"  class="btn btn-default">登入</button>
+            <!--<button type="submit" data-toggle="modal" ng-click="initResetInfo()" data-target="#reset-password-modal" class="btn btn-default">重置密码-->
+            <!--</button>-->
+        </form>
+        <div class="alert alert-warning alert-dismissible fade in login-hint" role="alert"
+             ng-show="loginStatus===REQUEST_STATUS.REQUESTING&&loginHintShow" ng-mouseover="loginHintShow=false;">
+            <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true"></span><span
+                    class="sr-only">Close</span></button>
+            <strong>登录中...</strong>
+        </div>
+        <div class="alert alert-danger alert-dismissible fade in login-hint" role="alert"
+             ng-show="loginStatus===REQUEST_STATUS.REQUEST_FAILED&&loginHintShow" ng-mouseover="loginHintShow=false;">
+            <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true"></span><span
+                    class="sr-only">Close</span></button>
+            <h4>登录失败</h4>
+
+            <span>无法登陆，请检查用户名和密码</span>
+        </div>
+        <!-- Modal -->
+        <div class="modal fade" id="reset-password-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
+                                class="sr-only">Close</span></button>
+                        <h4 class="modal-title" id="myModalLabel">重置密码</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form name="resetPasswordFormValidation" id="reset-password-form"
+                              ng-submit="resetPassword(resetPasswordFormValidation.$valid)" novalidate>
+                            <div class="form-group">
+                                <label for="userName">用户名</label>
+                                <input type="text" class="form-control" placeholder="请输入重置的用户名" required=""
+                                       name="userName" id="userName"
+                                       ng-model="resetPasswordForm.userName"/>
+                            </div>
+
+
+                            <div class="alert alert-danger"
+                                 ng-show="resetPasswordFormValidation.userName.$invalid&&submitted">
+                                请输入用户名
+                            </div>
+                            <div class="alert alert-warning"
+                                 ng-show="resetStatus===REQUEST_STATUS.REQUESTING">
+                                请求中...
+                            </div>
+                            <div class="alert alert-warning"
+                                 ng-show="resetStatus===REQUEST_STATUS.REQUEST_SUCCESSED">
+                                重置连接已发到邮箱，请检查。
+                            </div>
+                            <div class="alert alert-danger"
+                                 ng-show="resetStatus===REQUEST_STATUS.REQUEST_FAILED">
+                                {{resetHint}}
+                            </div>
+
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                        <button type="submit" class="btn btn-primary" form="reset-password-form">确定</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

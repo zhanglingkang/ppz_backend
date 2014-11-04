@@ -4,5 +4,5 @@
  */
 
 define(function (require) {
-    return angular.module('bmsIPad', ['ngRoute']);
+    return angular.module('bmsIPad', ['ngRoute', "ngCookies"]);
 });

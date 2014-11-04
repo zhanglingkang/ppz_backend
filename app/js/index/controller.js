@@ -11,7 +11,7 @@ define(function (require) {
     require("public/general/directive/alert");
     var system = require("public/local/system");
     require("public/local/share");
-    app.controller("appInfoCtrl", ["$window", "$scope", "shareDataService", "systemInfoService", "httpService", function ($window, $scope, shareDataService, systemInfoService, httpService) {
+    app.controller("appInfoCtrl", ["$window", "$scope", "$cookies", "shareDataService", "systemInfoService", "httpService", function ($window, $scope, $cookies, shareDataService, systemInfoService, httpService) {
         pubSub.subscribe("serverError", function (topicInfo) {
             $scope.alertShow = true;
             $scope.alertType = "alert-danger";
@@ -32,8 +32,26 @@ define(function (require) {
             $scope.alertType = "alert-success";
             $scope.alertContent = topicInfo.title + topicInfo.msg;
         });
-
-
+        $scope.isLogin = function () {
+            return !!($cookies.token && $cookies.token !== "null");
+        };
+        /**
+         * 任何一个请求都有四种状态：INIT 尚未请求 REQUESTING 请求中 REQUEST_SUCCESSED 请求成功 REQUEST_FAILED 请求失败
+         */
+        $scope.REQUEST_STATUS = {
+            INIT: 0,
+            REQUESTING: 1,
+            REQUEST_SUCCESSED: 2,
+            REQUEST_FAILED: 3
+        };
+        $scope.KEY_CODE = {
+            ENTER: 13,
+            BACKSPACE: 8,
+            TOP: 38,
+            RIGHT: 39,
+            BOTTOM: 40,
+            LEFT: 37
+        };
         $scope.name = "ppz管理系统";
         $scope.modules = [
             {

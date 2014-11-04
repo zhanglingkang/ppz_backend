@@ -25,7 +25,7 @@
 
 <body class="ng-cloak" x-delete-date-picker>
 
-<header>
+<header ng-if="isLogin()">
 
     <nav class="navbar navbar-default" role="navigation">
 
@@ -62,7 +62,7 @@
 
 </header>
 
-<div class="container-fluid">
+<div class="container-fluid" ng-if="isLogin()">
     <div class="row">
         <div class="col-md-2">
             <ul class="nav nav-pills nav-stacked" role="tablist">
@@ -74,6 +74,9 @@
             <div ng-view id="view"></div>
         </div>
     </div>
+</div>
+<div ng-include="'/tpl/login.html'" ng-if="!isLogin()">
+
 </div>
 <x-alert
         style="position:fixed;left:0;right:0;bottom:0;min-height: 100px;margin-bottom: 0;z-index: 100;"
@@ -116,6 +119,7 @@
 <footer></footer>
 <script data-remove src="bower_components/seajs/dist/sea-debug.js"></script>
 <script data-remove src="bower_components/angularjs/angular.js"></script>
+<script data-remove src="bower_components/angularjs/angular-cookies.js"></script>
 <script data-remove src="bower_components/angularjs/angular-route.js"></script>
 <script data-remove src="bower_components/jquery/dist/jquery.js"></script>
 <script data-remove src="bower_components/jquery/dist/hotkeys.js"></script>

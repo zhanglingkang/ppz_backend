@@ -10,6 +10,7 @@ define(function (require, exports, module) {
     require("user/user-list/controller");
     require("comment/comment-list/controller");
     require("restaurant/restaurant-image-list/controller");
+    require("login/controller");
     app.config(['$routeProvider', function ($routeProvider) {
         $routeProvider.
             when("/restaurant/restaurant-list/", {
