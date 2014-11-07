@@ -2,7 +2,7 @@
 
 define(function (require, exports, module) {
     var SERVER = "http://awsjp.ppzapp.com:34952";
-//    var SERVER = "http://ali.ppzapp.cn:34952";
+    var SERVER = "http://ali.ppzapp.cn:34952";
     var SERVER_URL = SERVER + "/BBQueue/API";
     var AUTH_SERVER_URL = SERVER + "/BBQueue/CredentialService";
     var FILE_SERVER_URL = SERVER + "/FileUploader/upload";
@@ -27,7 +27,7 @@ define(function (require, exports, module) {
         return {"data": JSON.stringify({"command": command, "inputs": data}), "hash": "pleasedonotcheckmyhashthankyou!!"};
     }
 
-    app.service("httpService", ["$http", "$rootScope", "$q", "$location", function ($http, $rootScope, $q, $location) {
+    app.service("httpService", ["$http", "$rootScope", "$q", "$location", "$cookies", function ($http, $rootScope, $q, $location, $cookies) {
         return {
             /**
              * @method post 向php服务器发送httpPOST请求。
@@ -37,12 +37,17 @@ define(function (require, exports, module) {
              * @param {Object} config.data 发送的数据
              * @param {Object} config.config post请求的相关配置信息,配置字段参考$http的config选项
              * @param {Boolean} config.isForm 默认false,如果为true,表示以表单形式穿参
+             * @param {Boolean} includeSessionId 默认true
              * @return {Promise} angular的promise对象
              */
             post: function (config) {
                 var deferred = $q.defer();
                 var formData;
                 var ngConfig = config.config || {};
+                config.includeSessionId = config.includeSessionId === false ? false : true;
+                if (config.includeSessionId) {
+                    config.data.sessionId = $cookies.token;
+                }
                 if (config.isForm) {
                     angular.extend(ngConfig, {
                         transformRequest: angular.identity,
@@ -68,8 +73,8 @@ define(function (require, exports, module) {
                             deferred.resolve(jsonData);
                         } else {
                             deferred.reject(jsonData);
-                            if (jsonData.code == PPZ_ERROR.SESSION_TIMEOUT) {
-                                $location.path("/login");
+                            if (jsonData.code == PPZ_CODE.SESSION_TIMEOUT) {
+                                $cookies.token = null;
                             }
                         }
                     }

@@ -1,8 +1,11 @@
 /**
  * seajs的配置
  */
-seajs.config({
-    base: "/js/",
-    alias: {
-    }
-});
+(function () {
+    var base = document.scripts[document.scripts.length - 1].src.replace(/\/js\/.*/, "/js/");
+    seajs.config({
+        base: base,
+        alias: {
+        }
+    });
+}());

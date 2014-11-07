@@ -6,19 +6,14 @@ define(function (require, exports, module) {
     var pubSub = require("public/general/pub-sub");
     app.service("restaurantListService", ["httpService", function (httpService) {
         return {
-            /**
-             * @param data 查询参数
-             * @param success
-             * @param error
-             */
-            getRestaurantList: function (data, success, error) {
-                httpService.get({
-                    r: "special/index",
-                    data: data,
-                    success: function (data, headers) {
-                        success(data);
-                    },
-                    error: error
+            getRestaurantList: function () {
+                return httpService.post({
+                    command: "getRestaurantInfoList",
+                    data: {
+                        start: 1,
+                        end: -1
+                    }
+                }).success(function (data) {
                 });
             },
             moveUp: function (id, positon, success, error) {

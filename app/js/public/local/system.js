@@ -1,7 +1,7 @@
 "use strict";
 
 define(function (require, exports, module) {
-    var ROOT_DIR = "/tpl/";
+    var ROOT_DIR = seajs.data.cwd + "tpl/";
     return {
         /**
          * @param path {String} tpl相对路径

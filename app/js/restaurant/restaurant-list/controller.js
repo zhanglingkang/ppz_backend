@@ -4,6 +4,11 @@ define(function (require, exports, module) {
     require("./service");
     var app = require("app");
     app.controller("restaurantListCtrl", ['$scope', "$routeParams", "publicService", "restaurantListService", function ($scope, $routeParams, publicService, restaurantListService) {
+
+
+        restaurantListService.getRestaurantList().success(function (data) {
+            $scope.restaurantList = data.results;
+        });
         $scope.searchForm = {
             status: "",
             title: ""

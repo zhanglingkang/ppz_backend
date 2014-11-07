@@ -35,6 +35,9 @@ define(function (require) {
         $scope.isLogin = function () {
             return !!($cookies.token && $cookies.token !== "null");
         };
+        $scope.getUserName = function () {
+            return $scope.isLogin() ? $cookies.username : "";
+        };
         /**
          * 任何一个请求都有四种状态：INIT 尚未请求 REQUESTING 请求中 REQUEST_SUCCESSED 请求成功 REQUEST_FAILED 请求失败
          */
@@ -110,9 +113,7 @@ define(function (require) {
             }
         ];
         $scope.logout = function () {
-            systemInfoService.clearLocalUserPermission();
-            systemInfoService.clearLocalUserInfo();
-            $window.location.href = system.getRequestInterface("index/logout");
+            delete $cookies.token;
         };
 
         /**

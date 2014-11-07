@@ -15,7 +15,7 @@ define(function (require, exports, module) {
                 }).success(function (data) {
                     var token = data.results[0].sessionId;
                     $cookies.token = token;
-                    $cookies.username = username;
+                    $cookies.username = userName;
                 }).error(function () {
                     $cookies.token = null;
                 });

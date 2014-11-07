@@ -14,7 +14,6 @@ define(function (require) {
                     function (result) {
                         $scope.loginStatus = $scope.REQUEST_STATUS.REQUEST_SUCCESSED;
                         console.log("login result " + result);
-                        console.log("token " + $cookies.token);
                         $location.path("/restaurant/restaurant-list/");
                     }, function (result) {
                         $scope.loginStatus = $scope.REQUEST_STATUS.REQUEST_FAILED;
