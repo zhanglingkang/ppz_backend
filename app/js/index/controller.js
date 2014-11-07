@@ -35,6 +35,7 @@ define(function (require) {
         $scope.isLogin = function () {
             return !!($cookies.token && $cookies.token !== "null");
         };
+        $scope.loginTemplate = seajs.data.cwd + "tpl/login.html";
         $scope.getUserName = function () {
             return $scope.isLogin() ? $cookies.username : "";
         };
