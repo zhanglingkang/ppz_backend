@@ -7,24 +7,18 @@ define(function (require, exports, module) {
     app.service("restaurantAddService", ["httpService", function (httpService) {
         return {
             /**
-             * @param data
-             * @param success
-             * @param error
+             * @param {Object} restaurantForm
              */
-            addTopic: function (data, success, error) {
-                httpService.post({
-                    r: "special/create",
-                    data: data,
-                    success: function (data) {
-                        pubSub.publish("businessSuccess", {
-                            title: "编辑专题成功!",
-                            msg: ""
-                        });
-                        success && success(data);
-                    },
-                    error: function () {
-                        error && error(data);
-                    }
+            addRestaurant: function (restaurantForm) {
+                return httpService.post({
+                    command: "createRestaurant",
+                    data: restaurantForm
+                });
+            },
+            modifyRestaurant: function (restaurantForm) {
+                return httpService.post({
+                    command: "modifyRestaurant",
+                    data: restaurantForm
                 });
             },
             getTopicDetail: function (id, success, error) {

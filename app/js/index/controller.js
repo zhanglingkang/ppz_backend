@@ -25,11 +25,13 @@ define(function (require) {
         pubSub.subscribe("businessError", function (topicInfo) {
             $scope.alertShow = true;
             $scope.alertType = "alert-danger";
+            topicInfo.title = topicInfo.title ? topicInfo.title + "：" : "";
             $scope.alertContent = topicInfo.title + topicInfo.msg;
         });
         pubSub.subscribe("businessSuccess", function (topicInfo) {
             $scope.alertShow = true;
             $scope.alertType = "alert-success";
+            topicInfo.title = topicInfo.title ? topicInfo.title + "：" : "";
             $scope.alertContent = topicInfo.title + topicInfo.msg;
         });
         $scope.isLogin = function () {
@@ -44,9 +46,9 @@ define(function (require) {
          */
         $scope.REQUEST_STATUS = {
             INIT: 0,
-            REQUESTING: 1,
-            REQUEST_SUCCESSED: 2,
-            REQUEST_FAILED: 3
+            ING: 1,
+            SUCCESSED: 2,
+            FAILED: 3
         };
         $scope.KEY_CODE = {
             ENTER: 13,

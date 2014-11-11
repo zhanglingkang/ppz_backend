@@ -5,6 +5,7 @@ define(function (require, exports, module) {
     require("public/local/http");
     var pubSub = require("public/general/pub-sub");
     app.service("restaurantListService", ["httpService", function (httpService) {
+        var restaurantList = [];
         return {
             getRestaurantList: function () {
                 return httpService.post({
@@ -14,21 +15,22 @@ define(function (require, exports, module) {
                         end: -1
                     }
                 }).success(function (data) {
+                    restaurantList = data.results;
                 });
             },
-            moveUp: function (id, positon, success, error) {
-                this.move({
-                    id: id,
-                    position: positon,
-                    direction: "up"
-                }, success, error);
-            },
-            moveDown: function (id, position, success, error) {
-                this.move({
-                    id: id,
-                    position: position,
-                    direction: "down"
-                }, success, error);
+            /**
+             *
+             * @param {String} restaurantId
+             */
+            getRestaurant: function (restaurantId) {
+                var result;
+                restaurantList.some(function (restaurant) {
+                    if (restaurantId === restaurant.restaurantId) {
+                        result = restaurant;
+                        return true;
+                    }
+                });
+                return result;
             },
             importRestaurant: function (data, success, error) {
                 httpService.get({
@@ -40,87 +42,6 @@ define(function (require, exports, module) {
                             msg: ""
                         });
                         success && success(data);
-                    },
-                    error: error
-                });
-            },
-            move: function (data, success, error) {
-                httpService.get({
-                    r: "special/updatePosition",
-                    data: data,
-                    success: function (data, headers) {
-                        pubSub.publish("businessSuccess", {
-                            title: "排序成功!",
-                            msg: ""
-                        });
-                        success && success(data);
-                    },
-                    error: error
-                });
-            },
-            lock: function (id, position, success, error) {
-                var data = {
-                    id: id,
-                    position: position
-
-                };
-                httpService.get({
-                    r: "special/PositionLock",
-                    data: data,
-                    success: function (data, headers) {
-                        pubSub.publish("businessSuccess", {
-                            title: "锁定成功!",
-                            msg: ""
-                        });
-                        success(data);
-                    },
-                    error: error
-                });
-            },
-            sortRestaurant: function (data, success, error) {
-                httpService.get({
-                    r: "special/updatePosition",
-                    data: data,
-                    success: function (data, headers) {
-                        pubSub.publish("businessSuccess", {
-                            title: "专题排序成功!",
-                            msg: ""
-                        });
-                        success(data);
-                    },
-                    error: error
-                });
-            },
-            pushToFrontEnd: function (id, success, error) {
-                var data = {
-                    id: id
-                };
-                httpService.get({
-                    r: "special/release",
-                    data: data,
-                    success: function (data, headers) {
-                        pubSub.publish("businessSuccess", {
-                            title: "发布成功!",
-                            msg: ""
-                        });
-                        success(data);
-                    },
-                    error: error
-                });
-            },
-            unlock: function (id, success, error) {
-                var data = {
-                    id: id
-                };
-                httpService.get({
-                    r: "special/PositionUnlock",
-                    data: data,
-                    success: function (data, headers) {
-                        pubSub.publish("businessSuccess", {
-                            title: "解锁成功!",
-                            msg: ""
-                        });
-                        success(data);
                     },
                     error: error
                 });

@@ -10,7 +10,8 @@ define(function (require, exports, module) {
     var PPZ_CODE = {
         SUCCESS: 0,//code为0表示请求成功
         USER_NOT_FOUND: 14,
-        SESSION_TIMEOUT: 16
+        SESSION_TIMEOUT: 16,
+        PERMISSION_DENIED: 18
     };
     var app = require("app");
     var util = require("public/general/util");
@@ -68,18 +69,42 @@ define(function (require, exports, module) {
                     data: config.data
                 })).success(
                     function (data, status, headers, config) {
-                        var jsonData = JSON.parse(data.data);
-                        if (jsonData.code == PPZ_CODE.SUCCESS) {
-                            deferred.resolve(jsonData);
-                        } else {
+                        if (!angular.isObject(data)) {
+                            pubSub.publish("jsonError", {
+                                status: status,
+                                response: data,
+                                url: config.command
+                            });
                             deferred.reject(jsonData);
-                            if (jsonData.code == PPZ_CODE.SESSION_TIMEOUT) {
-                                $cookies.token = null;
+                        } else {
+                            var jsonData = JSON.parse(data.data);
+                            if (jsonData.code == PPZ_CODE.SUCCESS) {
+                                deferred.resolve(jsonData);
+                            } else {
+                                deferred.reject(jsonData);
+                                if (jsonData.code == PPZ_CODE.SESSION_TIMEOUT) {
+                                    $cookies.token = null;
+                                } else if (jsonData.code == PPZ_CODE.PERMISSION_DENIED) {
+                                    pubSub.publish("businessError", {
+                                        title: "温馨提示",
+                                        msg: "权限不足"
+                                    });
+                                } else {
+                                    pubSub.publish("businessError", {
+                                        msg: jsonData.message
+                                    });
+                                }
                             }
                         }
                     }
-                ).error(
+                ).
+                    error(
                     function (data, status, headers, config) {
+                        pubSub.publish("serverError", {
+                            status: status,
+                            response: data,
+                            url: config.command
+                        });
                         deferred.reject(data);
                     }
                 );
@@ -94,7 +119,9 @@ define(function (require, exports, module) {
                 return deferred.promise;
             }
         }
-    }]);
+    }
+    ])
+    ;
 });
 
 
