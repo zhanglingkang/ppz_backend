@@ -83,7 +83,7 @@ define(function (require, exports, module) {
                             } else {
                                 deferred.reject(jsonData);
                                 if (jsonData.code == PPZ_CODE.SESSION_TIMEOUT) {
-                                    $cookies.token = null;
+                                    delete $cookies.token;
                                 } else if (jsonData.code == PPZ_CODE.PERMISSION_DENIED) {
                                     pubSub.publish("businessError", {
                                         title: "温馨提示",

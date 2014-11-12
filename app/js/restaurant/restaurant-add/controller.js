@@ -108,6 +108,10 @@ define(function (require, exports, module) {
                 "address.zipcode": "",
                 latitude: "",
                 longitude: "",
+                pointOfContactName: "",
+                pointOfContactPhone: "",
+                legalPersonName: "",
+                legalPersonPhone: "",
                 partyTypeInfos: [
 
                 ]

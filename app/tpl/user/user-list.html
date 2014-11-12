@@ -27,51 +27,16 @@
             <!--<tr ng-show="getRestaurantListStatus===REQUEST_STATUS.REQUEST_FAILED">-->
             <!--<td colspan="10" class="text-center table-hint">查询失败，请重新加载</td>-->
             <!--</tr>-->
-            <tr ng-repeat="topic in searchResult.topicList" data-drag-id="{{topic.id}}">
-                <td>{{topic.position}}</td>
-                <td>{{topic.title}}</td>
-                <td>{{topic.introduce}}</td>
-                <td>{{topic.status}}</td>
-                <td>{{topic.release_time}}</td>
-                <td>{{topic.create_account}}</td>
-                <td>{{topic.create_time}}</td>
-                <td>{{topic.modify_account}}</td>
-                <td>{{topic.modify_time}}</td>
+            <tr ng-repeat="user in userList">
+                <td>{{$index+1}}</td>
+                <td>{{user.userId}}</td>
+                <td>{{user.phone}}</td>
+                <td>{{user.email}}</td>
+                <td>{{user.name}}</td>
+                <td>{{user.name}}</td>
+                <td>{{user.name}}</td>
                 <td>
                     <div class="btn-group btn-group-sm">
-                        <a type="button" class="btn btn-default"
-                           title="锁定确认"
-                           x-selector="#topic-lock-form"
-                           x-popover
-                           x-close="deletePopover"
-                           x-style="width:200px;height:100px;"
-                           data-placement="left"
-                           ng-hide="topic.position_lock==1"
-                                >锁定至
-                        </a>
-                        <a type="button" class="btn btn-default"
-                           ng-click="moveUp(topic.id,topic.position)" ng-show="topic.position_lock!=1">上移
-                        </a>
-                        <a type="button" class="btn btn-default"
-                           ng-click="moveDown(topic.id,topic.position)" ng-show="topic.position_lock!=1">下移
-                        </a>
-                        <a type="button" class="btn btn-default"
-                           ng-click="unlock(topic.id)" ng-show="topic.position_lock==1">解锁
-                        </a>
-                        <a type="button" class="btn btn-default"
-                           ng-href="#/topic/topic-add/{{topic.id}}">编辑
-                        </a>
-                        <a type="button" class="btn btn-default"
-                           ng-click="deleteTopic(topic.id)"
-                           x-confirm-hint
-                           x-modal-title="删除专题"
-                           x-modal-content="确认删除吗？">
-                            删除
-                        </a>
-                        <a type="button" class="btn btn-default"
-                           ng-click="pushToFrontEnd(topic.id)">
-                            刷至前端
-                        </a>
                     </div>
                 </td>
             </tr>

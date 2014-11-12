@@ -4,6 +4,10 @@ define(function (require, exports, module) {
     require("./service");
     var app = require("app");
     app.controller("userListCtrl", ['$scope', "$routeParams", "publicService", "userListService", function ($scope, $routeParams, publicService, userListService) {
+
+        userListService.getUserList().success(function (data) {
+            $scope.userList = data.results;
+        });
         $scope.searchForm = {
             status: "",
             title: ""
@@ -29,64 +33,7 @@ define(function (require, exports, module) {
                 $scope.paginationScope.goPage();
             });
         };
-        $scope.importUser = function () {
-            $scope.loading = true;
-            userListService.importUser(null, function () {
-                $scope.loading = false;
-            }, function () {
-                $scope.loading = false;
-            });
-        };
-        $scope.moveUp = function (id, position) {
-            userListService.moveUp(id, position, function () {
-                $scope.paginationScope.goPage();
-            });
-        };
-        $scope.moveDown = function (id, position) {
-            userListService.moveDown(id, position, function () {
-                $scope.paginationScope.goPage();
-            });
-        };
-        $scope.sortUser = function (sortList, dragParam, dragId) {
-            var data = {};
-            sortList.some(function (value) {
-                if (value.id === dragId) {
-                    data.position = value.sort;
-                    data.id = value.id;
-                    return true;
-                }
-                return false;
-            });
-            userListService.sortUser(data, function () {
-                $scope.paginationScope.goPage();
-            });
-        };
-        /**
-         * 刷新到前端
-         * @param id
-         * @param position
-         */
-        $scope.pushToFrontEnd = function (id) {
-            userListService.pushToFrontEnd(id, function () {
-                $scope.paginationScope.goPage();
-            });
-        };
-        $scope.unlock = function (id) {
-            userListService.unlock(id, function () {
-                $scope.paginationScope.goPage();
-            });
-        };
-        $scope.lockPosition = function (valid, childScope) {
-            var user = childScope.user;
-            childScope.lockPositionSubmitted = true;
-            if (valid) {
-                userListService.lock(user.id, user.lockPosition, function () {
-                    $scope.paginationScope.goPage();
-                    childScope.deletePopover = true;
-                    childScope.lockPositionSubmitted = false;
-                });
-            }
-        };
+
 //        $scope.$watch("paginationScope", function () {
 //            if ($scope.paginationScope) {
 //                $scope.paginationScope.searchForm = $scope.searchForm;

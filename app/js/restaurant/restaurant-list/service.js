@@ -12,7 +12,7 @@ define(function (require, exports, module) {
                     command: "getRestaurantInfoList",
                     data: {
                         start: 1,
-                        end: -1
+                        length: -1
                     }
                 }).success(function (data) {
                     restaurantList = data.results;

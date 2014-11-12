@@ -20,7 +20,7 @@
     <label for="email" class=" control-label">邮件</label>
 
     <input type="email" ng-model="restaurantForm.email" class="form-control" id="email" placeholder="邮件"
-           required="required" name="email">
+           name="email">
 
     <div ng-show="restaurantFormValidation.email.$error.required&&submitted"
          class="alert alert-danger">
@@ -37,7 +37,7 @@
 <div class="col-xs-3">
     <label for="web" class=" control-label">网址</label>
     <input type="url" ng-model="restaurantForm.website" class="form-control" id="web" placeholder="网址"
-           required="required" name="web">
+           name="web">
 
     <div ng-show="restaurantFormValidation.web.$error.required&&submitted"
          class="alert alert-danger" class="alert alert-danger">
@@ -154,7 +154,8 @@
 <div class="col-xs-6">
     <label for="legalPerson" class=" control-label">法人代表</label>
 
-    <input type="input" ng-model="restaurantForm.legalPerson" class="form-control" id="legalPerson" placeholder="法人代表"
+    <input type="input" ng-model="restaurantForm.legalPersonName" class="form-control" id="legalPerson"
+           placeholder="法人代表"
            required="required" name="legalPerson">
 
     <div ng-show="restaurantFormValidation.legalPerson.$error.required&&submitted"
@@ -190,10 +191,11 @@
 <div class="col-xs-6">
     <label for="dutyPerson" class=" control-label">负责人</label>
 
-    <input type="input" ng-model="restaurantForm.dutyPerson" class="form-control" id="dutyPerson" placeholder="负责人"
-           required="required" name="dutyPerson">
+    <input type="input" ng-model="restaurantForm.pointOfContactName" class="form-control" id="dutyPerson"
+           placeholder="负责人"
+           required="required" name="pointOfContactName">
 
-    <div ng-show="restaurantFormValidation.dutyPerson.$error.required&&submitted"
+    <div ng-show="restaurantFormValidation.pointOfContactName.$error.required&&submitted"
          class="alert alert-danger">
         负责人不能为空
     </div>
@@ -205,15 +207,15 @@
 <div class="col-xs-6">
     <label for="legalPersonPhone" class=" control-label">负责人电话</label>
 
-    <input type="input" ng-model="restaurantForm.dutyPersonPhone" class="form-control" id="dutyPersonPhone"
+    <input type="input" ng-model="restaurantForm.pointOfContactPhone" class="form-control" id="dutyPersonPhone"
            placeholder="负责人电话" ng-pattern="/^[0-9]{11}$/"
-           required="required" name="dutyPersonPhone">
+           required="required" name="pointOfContactPhone">
 
-    <div ng-show="restaurantFormValidation.dutyPersonPhone.$error.required&&submitted"
+    <div ng-show="restaurantFormValidation.pointOfContactPhone.$error.required&&submitted"
          class="alert alert-danger">
         负责人电话不能为空
     </div>
-    <div ng-show="restaurantFormValidation.dutyPersonPhone.$error.pattern&&submitted"
+    <div ng-show="restaurantFormValidation.pointOfContactPhone.$error.pattern&&submitted"
          class="alert alert-danger">
         请填写正确的电话号码
     </div>
