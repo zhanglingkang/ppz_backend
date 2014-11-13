@@ -3,6 +3,7 @@
 define(function (require, exports, module) {
     require("./service");
     var app = require("app");
+    require("public/general/directive/table-scroll");
     app.controller("restaurantListCtrl", ['$scope', "$routeParams", "publicService", "restaurantListService", function ($scope, $routeParams, publicService, restaurantListService) {
 
 

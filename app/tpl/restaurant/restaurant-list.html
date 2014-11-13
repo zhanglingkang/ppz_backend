@@ -36,76 +36,88 @@
         <label>餐厅列表</label></div>
     <!--<span ng-show="restaurantList.length!=0">（{{boutique.status}}）</span>-->
     <div class="panel-body restaurant-list">
-        <table class="table table-bordered table-hover">
-            <thead>
-            <tr class="text">
-                <td>序号</td>
-                <td>餐厅图标</td>
-                <td>餐厅介绍图片</td>
-                <td>餐厅名称</td>
-                <td>营业执照图片</td>
-                <td>法人代表</td>
-                <td>法人代表电话</td>
-                <td>负责人</td>
-                <td>负责人电话</td>
-                <td>餐厅描述</td>
-                <td>电话</td>
-                <td>邮件</td>
-                <td>网址</td>
-                <td>地址</td>
-                <td>市</td>
-                <td>省</td>
-                <td>邮编</td>
-                <!--<td>注册日期</td>-->
-                <td>操作</td>
-            </tr>
-            </thead>
-            <!--x-drag-sort="data-drag-id" x-drag-completed="sortRestaurant"-->
-            <tbody>
-            <!--<tr ng-show="getRestaurantListStatus===REQUEST_STATUS.REQUESTING">-->
+        <div class="restaurant-table-container" x-table-scroll td="3">
+            <table class="table table-bordered table-hover ">
+                <thead>
+                <tr class="center">
+                    <td colspan="2"></td>
+                    <td colspan="11">餐厅公开信息</td>
+                    <td colspan="4">注册信息</td>
+                </tr>
+                <tr class="text no-scroll">
+                    <td style="min-width: 200px;">操作</td>
+                    <td style="min-width: 60px;">序号</td>
+                    <td style="min-width: 60px;">餐厅名称</td>
+                    <td style="min-width: 60px;">餐厅图标</td>
+                    <td style="min-width: 60px;">餐厅介绍图片</td>
+                    <td style="min-width: 60px;">餐厅描述</td>
+                    <td style="min-width: 60px;">电话</td>
+                    <td style="min-width: 60px;">邮件</td>
+                    <td style="min-width: 60px;">网址</td>
+                    <td style="min-width: 150px;">地址</td>
+                    <td style="min-width: 60px;">市</td>
+                    <td style="min-width: 60px;">省</td>
+                    <td style="min-width: 60px;">邮编</td>
+                    <td style="min-width: 60px;">法人代表</td>
+                    <td style="min-width: 60px;">法人代表电话</td>
+                    <td style="min-width: 60px;">负责人</td>
+                    <td style="min-width: 60px;">负责人电话</td>
+                    <!--<td>营业执照图片</td>-->
+                    <!--<td>注册日期</td>-->
+
+                </tr>
+                </thead>
+                <!--x-drag-sort="data-drag-id" x-drag-completed="sortRestaurant"-->
+                <tbody>
+                <!--<tr ng-show="getRestaurantListStatus===REQUEST_STATUS.REQUESTING">-->
                 <!--<td colspan="10" class="text-center table-hint">努力加载中...</td>-->
-            <!--</tr>-->
-            <!--<tr ng-show="getRestaurantListStatus===REQUEST_STATUS.REQUEST_SUCCESSED&&searchResult.restaurantList.length==0">-->
+                <!--</tr>-->
+                <!--<tr ng-show="getRestaurantListStatus===REQUEST_STATUS.REQUEST_SUCCESSED&&searchResult.restaurantList.length==0">-->
                 <!--<td colspan="10" class="text-center table-hint">查询结果为空</td>-->
-            <!--</tr>-->
-            <!--<tr ng-show="getRestaurantListStatus===REQUEST_STATUS.REQUEST_FAILED">-->
+                <!--</tr>-->
+                <!--<tr ng-show="getRestaurantListStatus===REQUEST_STATUS.REQUEST_FAILED">-->
                 <!--<td colspan="10" class="text-center table-hint">查询失败，请重新加载</td>-->
-            <!--</tr>-->
-            <tr ng-repeat="restaurant in restaurantList">
-                <td>{{$index+1}}</td>
-                <td><img ng-src="{{restaurant.imageLinkThumbnail}}" x-view-img/></td>
-                <td><img ng-src="{{restaurant.imageLinkPoster}}" x-view-img/></td>
-                <td>{{restaurant.name}}</td>
-                <td><img ng-src="{{restaurant.imageLinkPoster}}" x-view-img/></td>
-                <td>法人代表</td>
-                <td>法人代表电话</td>
-                <td>负责人</td>
-                <td>负责人电话</td>
-                <td>{{restaurant.restaurantDescription}}</td>
-                <td>{{restaurant.phone.area}}-{{restaurant.phone.phone}}</td>
-                <td>{{restaurant.email}}</td>
-                <td>{{restaurant.website}}</td>
-                <td>{{restaurant.address.street}}</td>
-                <td>{{restaurant.address.city}}</td>
-                <td>{{restaurant.address.state}}</td>
-                <td>{{restaurant.address.zipcode}}</td>
-                <td>
-                    <div class="btn-group btn-group-sm">
-                        <a type="button" class="btn btn-default"
-                           ng-href="#/restaurant/restaurant-add/{{restaurant.restaurantId}}">编辑
-                        </a>
-                        <a type="button" class="btn btn-default"
-                           ng-click="deleteRestaurant(restaurant.id)"
-                           x-confirm-hint
-                           x-modal-title="删除餐厅"
-                           x-modal-content="确认删除吗？">
-                            删除
-                        </a>
-                    </div>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+                <!--</tr>-->
+                <tr ng-repeat="restaurant in restaurantList" class="no-scroll">
+                    <td>
+                        <div class="btn-group btn-group-sm">
+                            <a type="button" class="btn btn-default"
+                               ng-href="#/restaurant/restaurant-add/{{restaurant.restaurantId}}">编辑
+                            </a>
+                            <a type="button" class="btn btn-default"
+                                    >重置密码
+                            </a>
+                            <a type="button" class="btn btn-default"
+                               ng-click="deleteRestaurant(restaurant.id)"
+                               x-confirm-hint
+                               x-modal-title="删除餐厅"
+                               x-modal-content="确认删除吗？">
+                                删除
+                            </a>
+                        </div>
+                    </td>
+                    <td>{{$index+1}}</td>
+                    <td>{{restaurant.name}}</td>
+                    <td><img ng-src="{{restaurant.imageLinkThumbnail}}" x-view-img/></td>
+                    <td><img ng-src="{{restaurant.imageLinkPoster}}" x-view-img/></td>
+                    <!--<td><img ng-src="{{restaurant.imageLinkPoster}}" x-view-img/></td>-->
+                    <td>{{restaurant.restaurantDescription}}</td>
+                    <td>{{restaurant.phone.phone}}</td>
+                    <td>{{restaurant.email}}</td>
+                    <td>{{restaurant.website}}</td>
+                    <td>{{restaurant.address.street}}</td>
+                    <td>{{restaurant.address.city}}</td>
+                    <td>{{restaurant.address.state}}</td>
+                    <td>{{restaurant.address.zipcode}}</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+
+                </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
     <div class="panel-footer" ng-show="searchResult.restaurantList.length!=0">
         <div style="position: relative;height: 70px;">

@@ -42,10 +42,29 @@ a {
     font-weight: 700;
 }
 
-img.preview{
+img.preview {
     max-width: 80px;
     max-height: 60px;
 }
-.restaurant-list img[x-view-img]{
+
+.restaurant-list img[x-view-img] {
     max-width: 60px;
+}
+
+table thead td {
+    font-weight: bold;
+}
+
+.restaurant-list table {
+    table-layout: auto;
+}
+
+.restaurant-table-container {
+    overflow-y: auto;
+}
+
+td.transform {
+    background: white;
+    border: 0 !important;
+    box-shadow: 0 0 1px;
 }

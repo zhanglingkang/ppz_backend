@@ -2,6 +2,10 @@
       x-reset="formReset"
       ng-submit="addRestaurant(restaurantFormValidation.$valid)"
       novalidate>
+<div class="col-xs-12 form-group-title">
+    <label>餐厅公开信息</label>
+    <hr>
+</div>
 <div class="col-xs-6">
     <label for="name" class="control-label">餐厅名称</label>
     <input type="input" ng-model="restaurantForm.name" class="form-control" id="name" placeholder="餐厅名称"
@@ -36,7 +40,7 @@
 </div>
 <div class="col-xs-3">
     <label for="web" class=" control-label">网址</label>
-    <input type="url" ng-model="restaurantForm.website" class="form-control" id="web" placeholder="网址"
+    <input type="text" ng-model="restaurantForm.website" class="form-control" id="web" placeholder="网址"
            name="web">
 
     <div ng-show="restaurantFormValidation.web.$error.required&&submitted"
@@ -53,7 +57,23 @@
     <!--专题名称为5-15个字符长度</p>-->
 </div>
 <hr class="space"/>
-<div class="col-xs-12">
+<div class="col-xs-4">
+    <label for="phone" class=" control-label">餐厅电话</label>
+
+    <input type="input" ng-model="restaurantForm['phone.number']" class="form-control" id="phone"
+           placeholder="餐厅电话"
+           required="required" name="phone">
+
+    <div ng-show="restaurantFormValidation.phone.$error.required&&submitted"
+         class="alert alert-danger">
+        餐厅电话不能为空
+    </div>
+
+    <!--<p ng-show="(restaurantFormValidation.title.$error.minlength||restaurantFormValidation.title.$error.maxlength)&&submitted"-->
+    <!--class="alert alert-danger">-->
+    <!--专题名称为5-15个字符长度</p>-->
+</div>
+<div class="col-xs-8">
     <label for="name" class=" control-label">餐厅描述</label>
 
     <input type="input" ng-model="restaurantForm.restaurantDescription" class="form-control" id="description"
@@ -68,6 +88,49 @@
     <!--<p ng-show="(restaurantFormValidation.title.$error.minlength||restaurantFormValidation.title.$error.maxlength)&&submitted"-->
     <!--class="alert alert-danger">-->
     <!--专题名称为5-15个字符长度</p>-->
+</div>
+<hr class="space"/>
+<div class="col-xs-12">
+    <label class="control-label">地址</label>
+    <input class="form-control" placeholder="地址" ng-model="restaurantForm['address.street']" name="street" required/>
+
+    <div ng-show="restaurantFormValidation.street.$error.required&&submitted"
+         class="alert alert-danger">
+        地址不能为空
+    </div>
+</div>
+<hr class="space"/>
+<div class="col-xs-4">
+    <label class="control-label">市</label>
+    <input class="form-control" placeholder="市" ng-model="restaurantForm['address.city']" required name="city"/>
+
+    <div ng-show="restaurantFormValidation.city.$error.required&&submitted"
+         class="alert alert-danger">
+        城市不能为空
+    </div>
+</div>
+<div class="col-xs-4">
+    <label class="control-label">省</label>
+    <input class="form-control" placeholder="省" ng-model="restaurantForm['address.state']" name="state" required/>
+
+    <div ng-show="restaurantFormValidation.state.$error.required&&submitted"
+         class="alert alert-danger">
+        省份不能为空
+    </div>
+</div>
+<div class="col-xs-4">
+    <label class="control-label">邮编</label>
+    <input class="form-control" placeholder="邮编" ng-model="restaurantForm['address.zipcode']" name="zipcode" required
+           ng-pattern="/^[0-9]{6}$/"/>
+
+    <div ng-show="restaurantFormValidation.zipcode.$error.required&&submitted"
+         class="alert alert-danger">
+        邮编不能为空
+    </div>
+    <div ng-show="restaurantFormValidation.zipcode.$error.pattern&&submitted"
+         class="alert alert-danger">
+        请填写正确的邮编
+    </div>
 </div>
 <!--<hr class="space"/>-->
 <!--<div class="col-xs-6">-->
@@ -151,6 +214,10 @@
 <!--alt="点击我预览大图" x-view-img x-img-title="营业执照图片"/>-->
 <!--</div>-->
 <hr class="space"/>
+<div class="col-xs-12 form-group-title">
+    <label>注册信息</label>
+    <hr>
+</div>
 <div class="col-xs-6">
     <label for="legalPerson" class=" control-label">法人代表</label>
 
@@ -171,7 +238,7 @@
     <label for="legalPersonPhone" class=" control-label">法人代表电话</label>
 
     <input type="input" ng-model="restaurantForm.legalPersonPhone" class="form-control" id="legalPersonPhone"
-           placeholder="法人代表电话" ng-pattern="/^[0-9]{11}$/"
+           placeholder="法人代表电话"
            required="required" name="legalPersonPhone">
 
     <div ng-show="restaurantFormValidation.legalPersonPhone.$error.required&&submitted"
@@ -208,7 +275,7 @@
     <label for="legalPersonPhone" class=" control-label">负责人电话</label>
 
     <input type="input" ng-model="restaurantForm.pointOfContactPhone" class="form-control" id="dutyPersonPhone"
-           placeholder="负责人电话" ng-pattern="/^[0-9]{11}$/"
+           placeholder="负责人电话"
            required="required" name="pointOfContactPhone">
 
     <div ng-show="restaurantFormValidation.pointOfContactPhone.$error.required&&submitted"
@@ -224,48 +291,7 @@
     <!--class="alert alert-danger">-->
     <!--专题名称为5-15个字符长度</p>-->
 </div>
-<hr class="space"/>
-<div class="col-xs-8">
-    <label class="control-label">地址</label>
-    <input class="form-control" placeholder="地址" ng-model="restaurantForm['address.street']" name="street" required/>
 
-    <div ng-show="restaurantFormValidation.street.$error.required&&submitted"
-         class="alert alert-danger">
-        地址不能为空
-    </div>
-</div>
-<div class="col-xs-1">
-    <label class="control-label">市</label>
-    <input class="form-control" placeholder="市" ng-model="restaurantForm['address.city']" required name="city"/>
-
-    <div ng-show="restaurantFormValidation.city.$error.required&&submitted"
-         class="alert alert-danger">
-        城市不能为空
-    </div>
-</div>
-<div class="col-xs-1">
-    <label class="control-label">省</label>
-    <input class="form-control" placeholder="省" ng-model="restaurantForm['address.state']" name="state" required/>
-
-    <div ng-show="restaurantFormValidation.state.$error.required&&submitted"
-         class="alert alert-danger">
-        省份不能为空
-    </div>
-</div>
-<div class="col-xs-2">
-    <label class="control-label">邮编</label>
-    <input class="form-control" placeholder="邮编" ng-model="restaurantForm['address.zipcode']" name="zipcode" required
-           ng-pattern="/^[0-9]{6}$/"/>
-
-    <div ng-show="restaurantFormValidation.zipcode.$error.required&&submitted"
-         class="alert alert-danger">
-        邮编不能为空
-    </div>
-    <div ng-show="restaurantFormValidation.zipcode.$error.pattern&&submitted"
-         class="alert alert-danger">
-        请填写正确的邮编
-    </div>
-</div>
 <hr class="space"/>
 <div class="col-xs-4">
     <label class="control-label">纬度</label>
