@@ -15,7 +15,7 @@ define(function (require, exports, module) {
     require("public/general/directive/submitting");
     var validationUtil = require("public/general/form-validation");
     require("public/general/directive/form-reset");
-    app.controller("restaurantAddCtrl", ['$scope', "$routeParams", "restaurantAddService", "restaurantListService", "publicService", function ($scope, $routeParams, restaurantAddService, restaurantListService, publicService) {
+    app.controller("restaurantAddCtrl", ['$scope', '$location', "$routeParams", "restaurantAddService", "restaurantListService", "publicService", function ($scope, $location, $routeParams, restaurantAddService, restaurantListService, publicService) {
         initForm();
         if ($routeParams.id != "null") {
             $scope.mode = $scope.MODE.EDIT;
@@ -80,6 +80,7 @@ define(function (require, exports, module) {
                         pubSub.publish("businessSuccess", {
                             msg: "餐厅注册成功"
                         });
+                        $location.path("/restaurant/restaurant-list/");
                     }).error(function (data) {
                         $scope.addStatus = $scope.REQUEST_STATUS.FAILED;
                     });
