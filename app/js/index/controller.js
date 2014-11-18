@@ -25,13 +25,15 @@ define(function (require) {
         pubSub.subscribe("businessError", function (topicInfo) {
             $scope.alertShow = true;
             $scope.alertType = "alert-danger";
-            topicInfo.title = topicInfo.title ? topicInfo.title + "：" : "";
+            topicInfo.title = topicInfo.title || "温馨提示";
+            topicInfo.title = topicInfo.title + "：";
             $scope.alertContent = topicInfo.title + topicInfo.msg;
         });
         pubSub.subscribe("businessSuccess", function (topicInfo) {
             $scope.alertShow = true;
             $scope.alertType = "alert-success";
-            topicInfo.title = topicInfo.title ? topicInfo.title + "：" : "";
+            topicInfo.title = topicInfo.title || "温馨提示";
+            topicInfo.title = topicInfo.title + "：";
             $scope.alertContent = topicInfo.title + topicInfo.msg;
         });
         $scope.isLogin = function () {
@@ -57,6 +59,10 @@ define(function (require) {
             RIGHT: 39,
             BOTTOM: 40,
             LEFT: 37
+        };
+        $scope.MODE = {
+            EDIT: 1,
+            ADD: 2
         };
         $scope.name = "ppz管理系统";
         $scope.modules = [

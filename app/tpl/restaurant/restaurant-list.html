@@ -47,21 +47,21 @@
                 <tr class="text no-scroll">
                     <td style="min-width: 200px;">操作</td>
                     <td style="min-width: 60px;">序号</td>
-                    <td style="min-width: 60px;">餐厅名称</td>
+                    <td style="min-width: 160px;">餐厅名称</td>
                     <td style="min-width: 60px;">餐厅图标</td>
                     <td style="min-width: 60px;">餐厅介绍图片</td>
-                    <td style="min-width: 60px;">餐厅描述</td>
+                    <td style="min-width: 180px;">餐厅描述</td>
                     <td style="min-width: 60px;">电话</td>
                     <td style="min-width: 60px;">邮件</td>
                     <td style="min-width: 60px;">网址</td>
-                    <td style="min-width: 150px;">地址</td>
-                    <td style="min-width: 60px;">市</td>
+                    <td style="min-width: 160px;">地址</td>
+                    <td style="min-width: 120px;">市</td>
                     <td style="min-width: 60px;">省</td>
                     <td style="min-width: 60px;">邮编</td>
-                    <td style="min-width: 60px;">法人代表</td>
-                    <td style="min-width: 60px;">法人代表电话</td>
-                    <td style="min-width: 60px;">负责人</td>
-                    <td style="min-width: 60px;">负责人电话</td>
+                    <td style="min-width: 100px;">法人代表</td>
+                    <td style="min-width: 120px;">法人代表电话</td>
+                    <td style="min-width: 100px;">负责人</td>
+                    <td style="min-width: 120px;">负责人电话</td>
                     <!--<td>营业执照图片</td>-->
                     <!--<td>注册日期</td>-->
 
@@ -88,25 +88,25 @@
                                     >重置密码
                             </a>
                             <a type="button" class="btn btn-default"
-                               ng-click="deleteRestaurant(restaurant.id)"
+                               ng-click="deleteRestaurant(restaurant.restaurantId)"
                                x-confirm-hint
                                x-modal-title="删除餐厅"
-                               x-modal-content="确认删除吗？">
+                               x-modal-content="确认删除“{{restaurant.name}}”吗？">
                                 删除
                             </a>
                         </div>
                     </td>
                     <td>{{$index+1}}</td>
-                    <td>{{restaurant.name}}</td>
+                    <td><span x-tooltip="10" data-original-title="{{restaurant.name}}">{{restaurant.name}}</span></td>
                     <td><img ng-src="{{restaurant.imageLinkThumbnail}}" x-view-img/></td>
                     <td><img ng-src="{{restaurant.imageLinkPoster}}" x-view-img/></td>
                     <!--<td><img ng-src="{{restaurant.imageLinkPoster}}" x-view-img/></td>-->
-                    <td>{{restaurant.restaurantDescription}}</td>
+                    <td><span x-tooltip="10" data-original-title="{{restaurant.restaurantDescription}}">{{restaurant.restaurantDescription}}</span></td>
                     <td>{{restaurant.phone.phone}}</td>
                     <td>{{restaurant.email}}</td>
-                    <td>{{restaurant.website}}</td>
-                    <td>{{restaurant.address.street}}</td>
-                    <td>{{restaurant.address.city}}</td>
+                    <td><span x-tooltip="30" data-original-title="{{restaurant.website}}">{{restaurant.website}}</span></td>
+                    <td><span x-tooltip="10" data-original-title="{{restaurant.address.street}}">{{restaurant.address.street}}</span></td>
+                    <td><span x-tooltip="10" data-original-title="{{restaurant.address.city}}">{{restaurant.address.city}}</span></td>
                     <td>{{restaurant.address.state}}</td>
                     <td>{{restaurant.address.zipcode}}</td>
                     <td></td>

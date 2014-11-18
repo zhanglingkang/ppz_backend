@@ -18,8 +18,10 @@ define(function (require, exports, module) {
     app.controller("restaurantAddCtrl", ['$scope', "$routeParams", "restaurantAddService", "restaurantListService", "publicService", function ($scope, $routeParams, restaurantAddService, restaurantListService, publicService) {
         initForm();
         if ($routeParams.id != "null") {
-            (function () {
-                var restaurant = restaurantListService.getRestaurant($routeParams.id);
+            $scope.mode = $scope.MODE.EDIT;
+            restaurantListService.getRestaurant($routeParams.id).then(function (data) {
+                var restaurant = data.results[0];
+                $scope.restaurant = restaurant;
                 angular.forEach($scope.restaurantForm, function (value, key) {
                     var object;
                     var property;
@@ -35,7 +37,7 @@ define(function (require, exports, module) {
                         $scope.restaurantForm[key] = restaurant[key];
                     }
                 });
-            }());
+            });
         }
         $scope.addStatus = $scope.REQUEST_STATUS.INIT;
         $scope.addTypeInfo = function () {
@@ -52,6 +54,16 @@ define(function (require, exports, module) {
                 return item != typeInfo;
             });
         };
+        $scope.modifyRestaurant = function () {
+            restaurantAddService.modifyRestaurant($scope.restaurantForm).success(function () {
+                $scope.addStatus = $scope.REQUEST_STATUS.SUCCESSED;
+                pubSub.publish("businessSuccess", {
+                    msg: "餐厅信息修改成功"
+                });
+            }).error(function (data) {
+                $scope.addStatus = $scope.REQUEST_STATUS.FAILED;
+            });
+        };
         $scope.addRestaurant = function (valid) {
             $scope.submitted = true;
             $scope.typeInfoScopeList.some(function (typeInfoScope) {
@@ -61,33 +73,72 @@ define(function (require, exports, module) {
                 }
             });
             if (valid) {
-
-                $scope.addStatus = $scope.REQUEST_STATUS.ING;
-                if ($scope.restaurantForm.restaurantId) {
-                    restaurantAddService.modifyRestaurant($scope.restaurantForm).success(function () {
+                if ($scope.mode === $scope.MODE.ADD) {
+                    $scope.addStatus = $scope.REQUEST_STATUS.ING;
+                    restaurantAddService.addRestaurant($scope.restaurantForm).success(function () {
                         $scope.addStatus = $scope.REQUEST_STATUS.SUCCESSED;
                         pubSub.publish("businessSuccess", {
-                            title: "提示",
                             msg: "餐厅注册成功"
                         });
                     }).error(function (data) {
                         $scope.addStatus = $scope.REQUEST_STATUS.FAILED;
                     });
                 } else {
-                    restaurantAddService.addRestaurant($scope.restaurantForm).success(function () {
-                        $scope.addStatus = $scope.REQUEST_STATUS.SUCCESSED;
-                        pubSub.publish("businessSuccess", {
-                            title: "提示",
-                            msg: "餐厅注册成功"
-                        });
-                    }).error(function (data) {
-                        $scope.addStatus = $scope.REQUEST_STATUS.FAILED;
-                    });
+                    $scope.modifyRestaurant();
                 }
             }
         };
+        $scope.useRestaurantThumbnailPicture = function () {
+            $scope.wantUploadThumbnail = true;
+            if (validateFile()) {
+                $scope.pictureForm.pictureType = "thumbnail";
+                restaurantAddService.uploadPictures($scope.pictureForm).then(function (data) {
+                    return restaurantAddService.useRestaurantThumbnailPicture(
+                        $scope.restaurantForm.restaurantId,
+                        data.results[0].pictureId
+                    )
+                }).then(function (data) {
+                    pubSub.publish("businessSuccess", {
+                        msg: "餐厅小图标修改成功"
+                    });
+                });
+            }
+        };
+        $scope.useRestaurantPosterPicture = function () {
+            $scope.wantUploadPoster = true;
+            if (validateFile()) {
+                $scope.pictureForm.pictureType = "poster";
+                restaurantAddService.uploadPictures($scope.pictureForm).then(function (data) {
+                    return restaurantAddService.useRestaurantPosterPicture(
+                        $scope.restaurantForm.restaurantId,
+                        data.results[0].pictureId
+                    )
+                }).then(function (data) {
+                    pubSub.publish("businessSuccess", {
+                        msg: "餐厅大图标修改成功"
+                    });
+                });
+            }
+        };
+        $scope.$watch("restaurantForm.restaurantId", function (newValue) {
+            $scope.pictureForm.restaurantId = newValue;
+        });
+        function validateFile() {
+            if ($scope.pictureForm.file && /image/.test($scope.pictureForm.file.type)) {
+                return true;
+            }
+        }
 
         function initForm() {
+            $scope.__defineSetter__("pictureFiles", function (value) {
+                $scope.pictureForm.file = value[0];
+            });
+            $scope.pictureForm = {
+                restaurantId: "",
+                file: "",
+                pictureComment: "",
+                pictureType: ""
+            };
             //与表单相关的信息
             $scope.restaurantForm = {
                 name: "",
@@ -95,7 +146,7 @@ define(function (require, exports, module) {
                 //"phone.area":703,
                 //"phone.number":5527382,
                 //"phone.extension":null,
-//                restaurantId: Date.now(),
+                restaurantId: "",
                 email: "",
                 website: "",
                 restaurantDescription: "",
@@ -118,6 +169,7 @@ define(function (require, exports, module) {
             };
             $scope.submitted = false;
             $scope.typeInfoScopeList = [];
+            $scope.mode = $scope.MODE.ADD;
         }
     }]);
 });

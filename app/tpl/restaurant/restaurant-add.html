@@ -3,7 +3,7 @@
       ng-submit="addRestaurant(restaurantFormValidation.$valid)"
       novalidate>
 <div class="col-xs-12 form-group-title">
-    <label>餐厅公开信息</label>
+    <label class="group">餐厅公开信息</label>
     <hr>
 </div>
 <div class="col-xs-6">
@@ -132,56 +132,66 @@
         请填写正确的邮编
     </div>
 </div>
-<!--<hr class="space"/>-->
-<!--<div class="col-xs-6">-->
-<!--<label for="imageLinkThumbnail" class=" control-label">餐厅图标40*40px</label>-->
-<!--&lt;!&ndash;<input type="file"  name="imageLinkThumbnail" id="imageLinkThumbnail"&ndash;&gt;-->
-<!--&lt;!&ndash;data-preview-img="#index-pic-preview-img"&ndash;&gt;-->
-<!--&lt;!&ndash;x-file-type="image" x-img-size="1340*480" ng-model="restaurantForm.xxxx">&ndash;&gt;-->
-<!--<input type="file" name="imageLinkThumbnail" id="imageLinkThumbnail"-->
-<!--data-preview-img="#thumbnail-preview-img"-->
+<section ng-if="mode===MODE.EDIT">
+    <hr class="space"/>
+    <div class="col-xs-6">
+        <label for="imageLinkThumbnail" class=" control-label">餐厅小图标</label>
+        <input type="file" name="imageLinkThumbnail" id="imageLinkThumbnail"
+               data-preview-img="#thumbnail-preview-img" x-set-file="pictureFiles"
+               x-file-type="image" x-file-required ng-model="xxxxx">
+        <!--x-img-size="1340*480"-->
+        <p ng-show="restaurantFormValidation.imageLinkThumbnail.$error.required&&wantUploadThumbnail"
+           class="alert alert-danger">
+            餐厅图标不能为空</p>
 
-<!--&lt;!&ndash;这里ng-model并不实际绑定哪个字段，写ng-model是为了表单校验对象中包含imageFile&ndash;&gt;-->
+        <p ng-show="restaurantFormValidation.imageLinkThumbnail.$error.fileType&&wantUploadThumbnail"
+           class="alert alert-danger">
+            请选择图片文件</p>
 
+        <p ng-show="restaurantFormValidation.imageLinkThumbnail.$error.imgSize&&wantUploadThumbnail"
+           class="alert alert-danger">
+            请选择40*40px的图片</p>
+    </div>
+    <div class="col-xs-4">
+        <img class="preview" id="thumbnail-preview-img" ng-src="{{restaurant.imageLinkThumbnail}}" x-clear-img
+             x-clear="imgClear"
+             x-view-img x-img-title="餐厅图标"/>
 
-<!--&lt;!&ndash;<p ng-show="restaurantFormValidation.imageLinkThumbnail.$error.required&&submitted"&ndash;&gt;-->
-<!--&lt;!&ndash;class="alert alert-danger">&ndash;&gt;-->
-<!--&lt;!&ndash;餐厅图标不能为空</p>&ndash;&gt;-->
+    </div>
+    <div class="col-xs-2">
+        <a class="btn btn-success" ng-click="useRestaurantThumbnailPicture()">确认修改</a>
+    </div>
 
-<!--&lt;!&ndash;<p ng-show="restaurantFormValidation.imageLinkThumbnail.$error.fileType&&submitted"&ndash;&gt;-->
-<!--&lt;!&ndash;class="alert alert-danger">&ndash;&gt;-->
-<!--&lt;!&ndash;请选择图片文件</p>&ndash;&gt;-->
+    <hr class="space"/>
+    <div class="col-xs-6">
+        <label for="imageLinkPoster" class=" control-label">餐厅大图标</label>
 
-<!--&lt;!&ndash;<p ng-show="restaurantFormValidation.imageLinkThumbnail.$error.imgSize&&submitted"&ndash;&gt;-->
-<!--&lt;!&ndash;class="alert alert-danger">&ndash;&gt;-->
-<!--&lt;!&ndash;请选择40*40px的图片</p>&ndash;&gt;-->
-<!--</div>-->
-<!--<div class="col-xs-6">-->
-<!--<img class="preview" id="thumbnail-preview-img" ng-src="{{restaurant.indexPicUrl}}" x-clear-img x-clear="imgClear"-->
-<!--alt="点击我预览大图" x-view-img x-img-title="餐厅图标"/>-->
-<!--</div>-->
-<!--<hr class="space"/>-->
-<!--<div class="col-xs-6">-->
-<!--<label for="imageLinkPoster" class=" control-label">餐厅介绍图片n*npx</label>-->
+        <input type="file" name="imageLinkPoster" id="imageLinkPoster" x-set-file="pictureFiles"
+               data-preview-img="#poster-preview-img" x-file-required x-file-type="image" ng-model="xxxxx"/>
 
-<!--<input type="file" name="imageLinkPoster" id="imageLinkPoster"-->
-<!--data-preview-img="#poster-preview-img"-->
+        <p ng-show="restaurantFormValidation.imageLinkPoster.$error.required&&wantUploadPoster"
+           class="alert alert-danger">
+            餐厅图标不能为空</p>
 
-<!--&lt;!&ndash;这里ng-model并不实际绑定哪个字段，写ng-model是为了表单校验对象中包含imageFile&ndash;&gt;-->
+        <p ng-show="restaurantFormValidation.imageLinkPoster.$error.fileType&&wantUploadPoster"
+           class="alert alert-danger">
+            请选择图片文件</p>
 
+        <p ng-show="restaurantFormValidation.imageLinkPoster.$error.imgSize&&wantUploadPoster"
+           class="alert alert-danger">
+            请选择40*40px的图片</p>
+    </div>
+    <div class="col-xs-4">
+        <img class="preview" id="poster-preview-img" ng-src="{{restaurant.imageLinkPoster}}" x-clear-img
+             x-clear="imgClear"
+             x-view-img x-img-title="餐厅图标"/>
 
-<!--&lt;!&ndash;<p ng-show="restaurantFormValidation.imageLinkThumbnail.$error.required&&submitted"&ndash;&gt;-->
-<!--&lt;!&ndash;class="alert alert-danger">&ndash;&gt;-->
-<!--&lt;!&ndash;餐厅图标不能为空</p>&ndash;&gt;-->
+    </div>
+    <div class="col-xs-2">
+        <a class="btn btn-success" ng-click="useRestaurantPosterPicture()">确认修改</a>
+    </div>
 
-<!--&lt;!&ndash;<p ng-show="restaurantFormValidation.imageLinkThumbnail.$error.fileType&&submitted"&ndash;&gt;-->
-<!--&lt;!&ndash;class="alert alert-danger">&ndash;&gt;-->
-<!--&lt;!&ndash;请选择图片文件</p>&ndash;&gt;-->
-
-<!--&lt;!&ndash;<p ng-show="restaurantFormValidation.imageLinkThumbnail.$error.imgSize&&submitted"&ndash;&gt;-->
-<!--&lt;!&ndash;class="alert alert-danger">&ndash;&gt;-->
-<!--&lt;!&ndash;请选择40*40px的图片</p>&ndash;&gt;-->
-<!--</div>-->
+</section>
 <!--<div class="col-xs-6">-->
 <!--<img id="poster-preview-img" class="preview" ng-src="{{restaurant.indexPicUrl}}" x-clear-img x-clear="imgClear"-->
 <!--alt="点击我预览大图" x-view-img x-img-title="餐厅介绍图片"/>-->
@@ -192,22 +202,22 @@
 
 
 <!--<input type="file" name="imageLinkBusiness" id="imageLinkBusiness"-->
-<!--data-preview-img="#business-preview-img"-->
+<!--data-preview-img="#business-preview-img"/>-->
 
-<!--&lt;!&ndash;这里ng-model并不实际绑定哪个字段，写ng-model是为了表单校验对象中包含imageFile&ndash;&gt;-->
+<!--这里ng-model并不实际绑定哪个字段，写ng-model是为了表单校验对象中包含imageFile-->
 
 
-<!--&lt;!&ndash;<p ng-show="restaurantFormValidation.imageLinkThumbnail.$error.required&&submitted"&ndash;&gt;-->
-<!--&lt;!&ndash;class="alert alert-danger">&ndash;&gt;-->
-<!--&lt;!&ndash;餐厅图标不能为空</p>&ndash;&gt;-->
+<!--<p ng-show="restaurantFormValidation.imageLinkThumbnail.$error.required&&submitted"-->
+<!--class="alert alert-danger">-->
+<!--餐厅图标不能为空</p>-->
 
-<!--&lt;!&ndash;<p ng-show="restaurantFormValidation.imageLinkThumbnail.$error.fileType&&submitted"&ndash;&gt;-->
-<!--&lt;!&ndash;class="alert alert-danger">&ndash;&gt;-->
-<!--&lt;!&ndash;请选择图片文件</p>&ndash;&gt;-->
+<!--<p ng-show="restaurantFormValidation.imageLinkThumbnail.$error.fileType&&submitted"-->
+<!--class="alert alert-danger">-->
+<!--请选择图片文件</p>-->
 
-<!--&lt;!&ndash;<p ng-show="restaurantFormValidation.imageLinkThumbnail.$error.imgSize&&submitted"&ndash;&gt;-->
-<!--&lt;!&ndash;class="alert alert-danger">&ndash;&gt;-->
-<!--&lt;!&ndash;请选择40*40px的图片</p>&ndash;&gt;-->
+<!--<p ng-show="restaurantFormValidation.imageLinkThumbnail.$error.imgSize&&submitted"-->
+<!--class="alert alert-danger">-->
+<!--请选择40*40px的图片</p>-->
 <!--</div>-->
 <!--<div class="col-xs-6">-->
 <!--<img class="preview" id="business-preview-img" ng-src="{{restaurant.indexPicUrl}}" x-clear-img x-clear="imgClear"-->
@@ -215,7 +225,7 @@
 <!--</div>-->
 <hr class="space"/>
 <div class="col-xs-12 form-group-title">
-    <label>注册信息</label>
+    <label class="group">注册信息</label>
     <hr>
 </div>
 <div class="col-xs-6">
@@ -368,8 +378,12 @@
 <div class="col-xs-12">
     <div class="">
         <button type="submit" class="btn btn-info" form="restaurant-add-form"
-                ng-disabled="addStatus===REQUEST_STATUS.ING">
+                ng-disabled="addStatus===REQUEST_STATUS.ING" ng-if="mode==MODE.ADD">
             注册<span ng-show="addStatus===REQUEST_STATUS.ING">中...</span>
+        </button>
+        <button type="submit" class="btn btn-info" form="restaurant-add-form"
+                ng-disabled="addStatus===REQUEST_STATUS.ING" ng-if="mode==MODE.EDIT">
+            修改<span ng-show="addStatus===REQUEST_STATUS.ING">中...</span>
         </button>
     </div>
 </div>

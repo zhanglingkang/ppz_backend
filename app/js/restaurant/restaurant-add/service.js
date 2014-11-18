@@ -15,9 +15,34 @@ define(function (require, exports, module) {
                     data: restaurantForm
                 });
             },
+            uploadPictures: function (pictureForm) {
+                return httpService.post({
+                    command: "createRestaurant",
+                    data: pictureForm,
+                    isForm: true
+                });
+            },
+            useRestaurantThumbnailPicture: function (restaurantId, pictureId) {
+                return httpService.post({
+                    command: "useRestaurantThumbnailPictures",
+                    data: {
+                        restaurantId: restaurantId,
+                        pictureId: pictureId
+                    }
+                });
+            },
+            useRestaurantPosterPicture: function (restaurantId, pictureId) {
+                return httpService.post({
+                    command: "useRestaurantPosterPictures",
+                    data: {
+                        restaurantId: restaurantId,
+                        pictureId: pictureId
+                    }
+                });
+            },
             modifyRestaurant: function (restaurantForm) {
                 return httpService.post({
-                    command: "modifyRestaurant",
+                    command: "modifyRestaurantInfo",
                     data: restaurantForm
                 });
             },

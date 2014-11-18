@@ -23,44 +23,25 @@ define(function (require, exports, module) {
              * @param {String} restaurantId
              */
             getRestaurant: function (restaurantId) {
-                var result;
-                restaurantList.some(function (restaurant) {
-                    if (restaurantId === restaurant.restaurantId) {
-                        result = restaurant;
-                        return true;
+                return httpService.post({
+                    command: "getRestaurantInfoById",
+                    data: {
+                        restaurantId: restaurantId
                     }
-                });
-                return result;
-            },
-            importRestaurant: function (data, success, error) {
-                httpService.get({
-                    r: "special/import",
-                    data: data,
-                    success: function (data, headers) {
-                        pubSub.publish("businessSuccess", {
-                            title: "导入成功!",
-                            msg: ""
-                        });
-                        success && success(data);
-                    },
-                    error: error
+                }).success(function (data) {
                 });
             },
-            deleteRestaurant: function (id, success, error) {
-                var data = {
-                    id: id
-                };
-                httpService.get({
-                    r: "special/delete",
-                    data: data,
-                    success: function (data, headers) {
-                        pubSub.publish("businessSuccess", {
-                            title: "删除专题成功!",
-                            msg: ""
-                        });
-                        success(data);
-                    },
-                    error: error
+            /**
+             *
+             * @param {String} restaurantId
+             */
+            deleteRestaurant: function (restaurantId) {
+                return httpService.post({
+                    command: "disableRestaurant",
+                    data: {
+                        restaurantId: restaurantId
+                    }
+                }).success(function (data) {
                 });
             }
 

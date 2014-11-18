@@ -43,7 +43,7 @@ define(function (require, exports, module) {
              */
             post: function (config) {
                 var deferred = $q.defer();
-                var formData;
+                var formData = new FormData();
                 var ngConfig = config.config || {};
                 config.includeSessionId = config.includeSessionId === false ? false : true;
                 if (config.includeSessionId) {
@@ -57,15 +57,16 @@ define(function (require, exports, module) {
                         }
                     });
                     for (var key in config.data) {
-                        formData.append(key, data[key]);
+                        formData.append(key, config.data[key]);
                     }
                     config.data = formData;
                 } else {
                     config.data = createRequest(config.command, config.data);
                 }
+                config.url = config.url || config.isForm ? FILE_SERVER_URL : SERVER_URL;
                 $http(angular.extend(ngConfig, {
                     method: "POST",
-                    url: config.url || SERVER_URL,
+                    url: config.url,
                     data: config.data
                 })).success(
                     function (data, status, headers, config) {

@@ -9,8 +9,8 @@ define(function (require, exports, module) {
             link: function (scope, elem, attrs) {
                 var $elem = $(elem);
                 var formScope = angular.element(elem).parent("form").scope();//表单所在scope对象
-                var formName = $elem.parents("form").prop("name");
-                var inputName = $elem.prop("name");
+                var formName = $elem.parents("form").attr("name");
+                var inputName = $elem.attr("name");
                 var inputValidation = formScope[formName][inputName];
                 var $error = inputValidation.$error;
                 $error.required = true;

@@ -1,12 +1,13 @@
 "use strict";
 
 define(function (require, exports, module) {
-    require("./service");
     var app = require("app");
+    var pubSub = require("public/general/pub-sub");
+    require("./service");
     require("public/general/directive/table-scroll");
+    require("public/general/directive/confirm-hint");
+    require("public/general/directive/tooltip");
     app.controller("restaurantListCtrl", ['$scope', "$routeParams", "publicService", "restaurantListService", function ($scope, $routeParams, publicService, restaurantListService) {
-
-
         restaurantListService.getRestaurantList().success(function (data) {
             $scope.restaurantList = data.results;
         });
@@ -30,19 +31,18 @@ define(function (require, exports, module) {
         $scope.search = function () {
             //$scope.paginationScope.goPage(1);
         };
-        $scope.deleteRestaurant = function (id) {
-            restaurantListService.deleteRestaurant(id, function () {
-                $scope.paginationScope.goPage();
-            });
+        $scope.deleteRestaurant = function (restaurantId) {
+            restaurantListService.deleteRestaurant(restaurantId).success(function () {
+                    $scope.restaurantList = $scope.restaurantList.filter(function (restaurant) {
+                        return restaurant.restaurantId !== restaurantId;
+                    });
+                    pubSub.publish("businessSuccess", {
+                        msg: "删除成功"
+                    });
+                }
+            );
         };
-        $scope.importRestaurant = function () {
-            $scope.loading = true;
-            restaurantListService.importRestaurant(null, function () {
-                $scope.loading = false;
-            }, function () {
-                $scope.loading = false;
-            });
-        };
+
         $scope.moveUp = function (id, position) {
             restaurantListService.moveUp(id, position, function () {
                 $scope.paginationScope.goPage();
@@ -66,32 +66,6 @@ define(function (require, exports, module) {
             restaurantListService.sortRestaurant(data, function () {
                 $scope.paginationScope.goPage();
             });
-        };
-        /**
-         * 刷新到前端
-         * @param id
-         * @param position
-         */
-        $scope.pushToFrontEnd = function (id) {
-            restaurantListService.pushToFrontEnd(id, function () {
-                $scope.paginationScope.goPage();
-            });
-        };
-        $scope.unlock = function (id) {
-            restaurantListService.unlock(id, function () {
-                $scope.paginationScope.goPage();
-            });
-        };
-        $scope.lockPosition = function (valid, childScope) {
-            var restaurant = childScope.restaurant;
-            childScope.lockPositionSubmitted = true;
-            if (valid) {
-                restaurantListService.lock(restaurant.id, restaurant.lockPosition, function () {
-                    $scope.paginationScope.goPage();
-                    childScope.deletePopover = true;
-                    childScope.lockPositionSubmitted = false;
-                });
-            }
         };
 //        $scope.$watch("paginationScope", function () {
 //            if ($scope.paginationScope) {

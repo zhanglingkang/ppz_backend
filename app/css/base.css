@@ -17,7 +17,22 @@ hr.space {
     background: 0 0;
     border: none;
     clear: both;
+    height: 1px;
 }
-.center{
+
+form hr {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+form label {
+    font-weight: normal;
+}
+
+form label.group {
+    font-weight: bold;
+}
+
+.center {
     text-align: center;
 }
