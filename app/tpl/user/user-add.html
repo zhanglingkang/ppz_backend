@@ -1,0 +1,78 @@
+<form class=" col-xs-10" role="form" id="user-add-form" name="userFormValidation" x-form-reset
+      x-reset="formReset"
+      ng-submit="addUser(userFormValidation.$valid)"
+      novalidate>
+    <div class="col-xs-12 form-group-title">
+        <label class="group">用户信息</label>
+        <hr>
+    </div>
+    <div class="col-xs-6">
+        <label for="userId" class="control-label">用户名</label>
+        <input type="input" ng-model="userForm.userId" class="form-control" id="userId" placeholder="用户名"
+               required="required" name="userId" disabled>
+
+        <div ng-show="userFormValidation.userId.$error.required&&submitted"
+             class="alert alert-danger">
+            用户名不能为空
+        </div>
+
+        <!--<p ng-show="(userFormValidation.title.$error.minlength||userFormValidation.title.$error.maxlength)&&submitted"-->
+        <!--class="alert alert-danger">-->
+        <!--专题名称为5-15个字符长度</p>-->
+    </div>
+    <div class="col-xs-3">
+        <label for="email" class=" control-label">邮件</label>
+
+        <input type="email" ng-model="userForm.email" class="form-control" id="email" placeholder="邮件"
+               name="email" required>
+
+        <div ng-show="userFormValidation.email.$error.required&&submitted"
+             class="alert alert-danger">
+            邮件不能为空
+        </div>
+        <div ng-show="userFormValidation.email.$error.email&&submitted"
+             class="alert alert-danger">
+            请填写正确的邮件地址
+        </div>
+        <!--<p ng-show="(userFormValidation.title.$error.minlength||userFormValidation.title.$error.maxlength)&&submitted"-->
+        <!--class="alert alert-danger">-->
+        <!--专题名称为5-15个字符长度</p>-->
+    </div>
+    <div class="col-xs-3">
+        <label for="name" class=" control-label">姓名</label>
+        <input type="text" ng-model="userForm.name" class="form-control" id="name" placeholder="姓名"
+               name="name" required="">
+
+        <div ng-show="userFormValidation.name.$error.required&&submitted"
+             class="alert alert-danger" class="alert alert-danger">
+            姓名不能为空
+        </div>
+    </div>
+    <hr class="space"/>
+    <div class="col-xs-4">
+        <label for="phone" class=" control-label">手机</label>
+
+        <input type="input" ng-model="userForm.phone" class="form-control" id="phone"
+               placeholder="手机"
+               required="required" name="phone">
+
+        <div ng-show="userFormValidation.phone.$error.required&&submitted"
+             class="alert alert-danger">
+            手机不能为空
+        </div>
+    </div>
+</form>
+</div>
+<hr class="space"/>
+<div class="col-xs-12">
+    <div class="">
+        <button type="submit" class="btn btn-info" form="user-add-form"
+                ng-if="mode==MODE.ADD" ng-disabled="mode==MODE.ADD">
+            无法注册<span ng-show="addStatus===REQUEST_STATUS.ING">中...</span>
+        </button>
+        <button type="submit" class="btn btn-info" form="user-add-form"
+                ng-disabled="addStatus===REQUEST_STATUS.ING" ng-if="mode==MODE.EDIT">
+            修改<span ng-show="addStatus===REQUEST_STATUS.ING">中...</span>
+        </button>
+    </div>
+</div>
