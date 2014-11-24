@@ -6,6 +6,7 @@
         <table class="table table-bordered table-hover">
             <thead>
             <tr class="text">
+                <td>操作</td>
                 <td>序号</td>
                 <td>用户名</td>
                 <td>手机</td>
@@ -13,7 +14,6 @@
                 <td>姓名</td>
                 <td>申请日期</td>
                 <td>最后登录时间</td>
-                <td>操作</td>
             </tr>
             </thead>
             <!--x-drag-sort="data-drag-id" x-drag-completed="sortTopic"-->
@@ -28,6 +28,13 @@
             <!--<td colspan="10" class="text-center table-hint">查询失败，请重新加载</td>-->
             <!--</tr>-->
             <tr ng-repeat="user in userList">
+                <td>
+                    <div class="btn-group btn-group-sm">
+                        <a class="btn btn-default" href="#/user/user-add/{{user.userId}}">修改</a>
+                        <button class="btn btn-default" ng-click="disableUser(user)">禁用</button>
+                        <!--<button class="btn btn-default" ng-click="enableUser(user)">启用</button>-->
+                    </div>
+                </td>
                 <td>{{$index+1}}</td>
                 <td>{{user.userId}}</td>
                 <td>{{user.phone}}</td>
@@ -35,10 +42,6 @@
                 <td>{{user.name}}</td>
                 <td>{{user.name}}</td>
                 <td>{{user.name}}</td>
-                <td>
-                    <div class="btn-group btn-group-sm">
-                    </div>
-                </td>
             </tr>
             </tbody>
         </table>

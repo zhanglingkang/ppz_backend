@@ -107,6 +107,10 @@ define(function (require) {
                     {
                         name: "app用户列表",
                         action: "/user/user-list/"
+                    },
+                    {
+                        name: "app用户信息修改",
+                        action: "/user/user-add/null"
                     }
                 ]
             },

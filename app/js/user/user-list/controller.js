@@ -28,11 +28,20 @@ define(function (require, exports, module) {
         $scope.search = function () {
             $scope.paginationScope.goPage(1);
         };
-        $scope.deleteUser = function (id) {
-            userListService.deleteUser(id, function () {
-                $scope.paginationScope.goPage();
-            });
+        $scope.disableUser = function (user) {
+            userListService.disableUser(user.userId).success(function () {
+                $scope.userList = $scope.userList.filter(function (item) {
+                    return item.userId != user.userId;
+                });
+            })
         };
+        $scope.enableUser = function (user) {
+            userListService.enableUser(user.userId).success(function () {
+                $scope.userList.forEach(function (item) {
+                    //item.
+                });
+            })
+        }
 
 //        $scope.$watch("paginationScope", function () {
 //            if ($scope.paginationScope) {

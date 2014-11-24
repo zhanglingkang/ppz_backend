@@ -8,6 +8,7 @@ define(function (require, exports, module) {
     require("restaurant/restaurant-list/controller");
     require("menu/menu-list/controller");
     require("user/user-list/controller");
+    require("user/user-add/controller");
     require("comment/comment-list/controller");
     require("restaurant/restaurant-image-list/controller");
     require("login/controller");
@@ -28,6 +29,10 @@ define(function (require, exports, module) {
             when("/user/user-list/", {
                 controller: "userListCtrl",
                 templateUrl: system.getTplAbsolutePath("tpl/user/user-list.html")
+            }).
+            when("/user/user-add/:id", {
+                controller: "userAddCtrl",
+                templateUrl: system.getTplAbsolutePath("tpl/user/user-add.html")
             }).
             when('/comment/comment-list/', {
                 controller: "commentListCtrl",

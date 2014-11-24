@@ -5,6 +5,7 @@ define(function (require, exports, module) {
     require("public/local/http");
     var pubSub = require("public/general/pub-sub");
     app.service("userListService", ["httpService", function (httpService) {
+        var userList;
         return {
             getUserList: function () {
                 return httpService.post({
@@ -14,23 +15,38 @@ define(function (require, exports, module) {
                         length: -1
                     }
                 }).success(function (data) {
+                    userList = data.results;
                 });
             },
-            deleteUser: function (id, success, error) {
-                var data = {
-                    id: id
-                };
-                httpService.get({
-                    r: "special/delete",
-                    data: data,
-                    success: function (data, headers) {
-                        pubSub.publish("businessSuccess", {
-                            title: "删除专题成功!",
-                            msg: ""
-                        });
-                        success(data);
-                    },
-                    error: error
+            getUser: function (userId) {
+                var user;
+                userList.some(function (item) {
+                    if (item.userId === userId) {
+                        user = item;
+                        return true;
+                    }
+                });
+                return user;
+            },
+            disableUser: function (userId) {
+                return httpService.post({
+                    command: "disableUser",
+                    data: {
+                        userId: userId
+                    }
+                }).success(function (data) {
+                    pubSub.publish("businessSuccess", {
+                        msg: "禁用成功！"
+                    });
+                })
+            },
+            enableUser: function (userId) {
+                return httpService.post({
+                    command: "enableUser",
+                    data: {
+                        userId: userId
+                    }
+                }).success(function (data) {
                 });
             }
 
