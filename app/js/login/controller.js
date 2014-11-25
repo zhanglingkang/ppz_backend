@@ -9,14 +9,14 @@ define(function (require) {
             $scope.submitted = true;
             if (valid) {
                 $scope.loginHintShow = true;
-                $scope.loginStatus = $scope.REQUEST_STATUS.REQUESTING;
+                $scope.loginStatus = $scope.REQUEST_STATUS.ING;
                 loginService.login($scope.userName, $scope.password).then(
                     function (result) {
-                        $scope.loginStatus = $scope.REQUEST_STATUS.REQUEST_SUCCESSED;
+                        $scope.loginStatus = $scope.REQUEST_STATUS.SUCCESSED;
                         console.log("login result " + result);
                         $location.path("/restaurant/restaurant-list/");
                     }, function (result) {
-                        $scope.loginStatus = $scope.REQUEST_STATUS.REQUEST_FAILED;
+                        $scope.loginStatus = $scope.REQUEST_STATUS.FAILED;
                         console.log("login failed " + result);
                     }
                 );

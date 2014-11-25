@@ -16,7 +16,12 @@ define(function (require, exports, module) {
                             $elem.find("table tr.no-scroll").each(function () {
                                     for (var i = 0; i < tdCount; ++i) {
                                         $(this).find("td:nth-child(" + (i + 1) + ")").each(function () {
-                                                $(this).css({left: scrollLeft + "px", position: "relative"});
+//                                                $(this).css({left: scrollLeft + "px", position: "relative"});
+                                                $(this).css({
+                                                    transform: $(this)[0].style.transform.replace(/translateX\(.*\)/g, "") + " translateX(" + scrollLeft + "px)",
+                                                    position: "relative"
+                                                })
+
                                                 if (scrollLeft === 0) {
                                                     $(this).removeClass("horizontal-fix");
                                                 } else {
@@ -40,10 +45,17 @@ define(function (require, exports, module) {
                                     return false;
                                 }
                                 if (top < 0) {
-                                    $(this).find("td").css({top: -top + "px", position: "relative"});
+//                                    $(this).find("td").css({top: -top + "px", position: "relative"});
+//                                    $(this).find("td").css({transform: "translateY(" + (-top) + "px)", position: "relative"});
+                                    $(this).find("td").css({
+                                        transform: $(this)[0].style.transform.replace(/translateY\(.*\)/g, "") + " translateY(" + -top + "px)",
+                                        position: "relative"
+                                    })
                                     $(this).find("td").addClass("vertical-fix");
                                 } else {
-                                    $(this).find("td").css({top: "0px", position: "relative"});
+                                    $(this).find("td").css({
+                                        transform: $(this)[0].style.transform.replace(/translateY\(.*\)/g, "") + " translateY(" + 0 + "px)"
+                                    })
                                     $(this).find("td").removeClass("vertical-fix");
                                 }
                             }

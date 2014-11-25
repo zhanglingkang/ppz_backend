@@ -26,13 +26,13 @@
             <!--</button>-->
         </form>
         <div class="alert alert-warning alert-dismissible fade in login-hint" role="alert"
-             ng-show="loginStatus===REQUEST_STATUS.REQUESTING&&loginHintShow" ng-mouseover="loginHintShow=false;">
+             ng-show="loginStatus===REQUEST_STATUS.ING&&loginHintShow" ng-mouseover="loginHintShow=false;">
             <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true"></span><span
                     class="sr-only">Close</span></button>
             <strong>登录中...</strong>
         </div>
         <div class="alert alert-danger alert-dismissible fade in login-hint" role="alert"
-             ng-show="loginStatus===REQUEST_STATUS.REQUEST_FAILED&&loginHintShow" ng-mouseover="loginHintShow=false;">
+             ng-show="loginStatus===REQUEST_STATUS.FAILED&&loginHintShow" ng-mouseover="loginHintShow=false;">
             <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true"></span><span
                     class="sr-only">Close</span></button>
             <h4>登录失败</h4>
