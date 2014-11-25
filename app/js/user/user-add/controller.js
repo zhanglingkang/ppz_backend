@@ -19,9 +19,11 @@ define(function (require, exports, module) {
         initForm();
         if ($routeParams.id != "null") {
             $scope.mode = $scope.MODE.EDIT;
-            $scope.user = userListService.getUser($routeParams.id);
-            angular.forEach($scope.userForm, function (value, key) {
-                $scope.userForm[key] = $scope.user[key];
+            userListService.getUser($routeParams.id).success(function (data) {
+                $scope.user = data.results[0];
+                angular.forEach($scope.userForm, function (value, key) {
+                    $scope.userForm[key] = $scope.user[key];
+                });
             });
         }
         $scope.addStatus = $scope.REQUEST_STATUS.INIT;
@@ -29,7 +31,7 @@ define(function (require, exports, module) {
             userAddService.modifyUser($scope.userForm).success(function () {
                 $scope.addStatus = $scope.REQUEST_STATUS.SUCCESSED;
                 pubSub.publish("businessSuccess", {
-                    msg: "餐厅信息修改成功"
+                    msg: "用户信息修改成功"
                 });
                 $location.path("/user/user-list/");
             }).error(function (data) {

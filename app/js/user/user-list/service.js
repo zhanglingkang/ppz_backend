@@ -19,14 +19,14 @@ define(function (require, exports, module) {
                 });
             },
             getUser: function (userId) {
-                var user;
-                userList.some(function (item) {
-                    if (item.userId === userId) {
-                        user = item;
-                        return true;
+                return httpService.post({
+                    command: "getSingleUserInfo",
+                    data: {
+                        userId: userId
                     }
+                }).success(function (data) {
+
                 });
-                return user;
             },
             disableUser: function (userId) {
                 return httpService.post({

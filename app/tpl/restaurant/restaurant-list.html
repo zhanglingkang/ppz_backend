@@ -36,7 +36,7 @@
         <label>餐厅列表</label></div>
     <!--<span ng-show="restaurantList.length!=0">（{{boutique.status}}）</span>-->
     <div class="panel-body restaurant-list">
-        <div class="restaurant-table-container" x-table-scroll td="3">
+        <div class="restaurant-table-container" x-table-scroll td="3" tr="2">
             <table class="table table-bordered table-hover ">
                 <thead>
                 <tr class="center">
@@ -45,9 +45,9 @@
                     <td colspan="4">注册信息</td>
                 </tr>
                 <tr class="text no-scroll">
-                    <td style="min-width: 200px;">操作</td>
-                    <td style="min-width: 60px;">序号</td>
-                    <td style="min-width: 160px;">餐厅名称</td>
+                    <td style="min-width: 200px;" class="operate">操作</td>
+                    <td style="min-width: 60px;" class="order">序号</td>
+                    <td style="min-width: 160px;" class="name">餐厅名称</td>
                     <td style="min-width: 60px;">餐厅图标</td>
                     <td style="min-width: 60px;">餐厅介绍图片</td>
                     <td style="min-width: 180px;">餐厅描述</td>
@@ -101,12 +101,16 @@
                     <td><img ng-src="{{restaurant.imageLinkThumbnail}}" x-view-img/></td>
                     <td><img ng-src="{{restaurant.imageLinkPoster}}" x-view-img/></td>
                     <!--<td><img ng-src="{{restaurant.imageLinkPoster}}" x-view-img/></td>-->
-                    <td><span x-tooltip="10" data-original-title="{{restaurant.restaurantDescription}}">{{restaurant.restaurantDescription}}</span></td>
+                    <td><span x-tooltip="10" data-original-title="{{restaurant.restaurantDescription}}">{{restaurant.restaurantDescription}}</span>
+                    </td>
                     <td>{{restaurant.phone.phone}}</td>
                     <td>{{restaurant.email}}</td>
-                    <td><span x-tooltip="30" data-original-title="{{restaurant.website}}">{{restaurant.website}}</span></td>
-                    <td><span x-tooltip="10" data-original-title="{{restaurant.address.street}}">{{restaurant.address.street}}</span></td>
-                    <td><span x-tooltip="10" data-original-title="{{restaurant.address.city}}">{{restaurant.address.city}}</span></td>
+                    <td><span x-tooltip="30" data-original-title="{{restaurant.website}}">{{restaurant.website}}</span>
+                    </td>
+                    <td><span x-tooltip="10" data-original-title="{{restaurant.address.street}}">{{restaurant.address.street}}</span>
+                    </td>
+                    <td><span x-tooltip="10" data-original-title="{{restaurant.address.city}}">{{restaurant.address.city}}</span>
+                    </td>
                     <td>{{restaurant.address.state}}</td>
                     <td>{{restaurant.address.zipcode}}</td>
                     <td></td>

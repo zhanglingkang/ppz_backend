@@ -63,8 +63,17 @@ table thead td {
     overflow-y: auto;
 }
 
-td.transform {
+td.vertical-fix, td.horizontal-fix {
     background: white;
     border: 0 !important;
     box-shadow: 0 0 1px;
+}
+
+[ng-view] table thead td {
+    position: relative;
+    z-index: 100;
+}
+
+.restaurant-list td.operate, .restaurant-list td.order, .restaurant-list td.name {
+    z-index: 200;
 }
