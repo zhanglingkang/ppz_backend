@@ -18,6 +18,16 @@ define(function (require, exports, module) {
                     restaurantList = data.results;
                 });
             },
+            searchRestaurantList: function (restaurantName) {
+                return httpService.post({
+                    command: "searchRestaurantByName",
+                    data: {
+                        name: restaurantName
+                    }
+                }).success(function (data) {
+                    restaurantList = data.results;
+                });
+            },
             /**
              *
              * @param {String} restaurantId
@@ -29,6 +39,23 @@ define(function (require, exports, module) {
                         restaurantId: restaurantId
                     }
                 }).success(function (data) {
+                });
+            },
+            /**
+             * @param {String} userId
+             * @param {String} restaurantId
+             */
+            assignManagingRestaurantToUser: function (userId, restaurantId) {
+                return httpService.post({
+                    command: "assignManagingRestaurantToUser",
+                    data: {
+                        restaurantId: restaurantId,
+                        userId: userId
+                    }
+                }).success(function (data) {
+                    pubSub.publish("businessSuccess", {
+                        msg: "指派用户成功"
+                    });
                 });
             },
             /**

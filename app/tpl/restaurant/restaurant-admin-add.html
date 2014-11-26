@@ -1,0 +1,100 @@
+<form class=" col-xs-10" role="form" id="restaurant-admin-add-form" name="restaurantAdminFormValidation" x-form-reset
+      x-reset="formReset"
+      ng-submit="addRestaurantAdmin(restaurantAdminFormValidation.$valid)"
+      novalidate>
+    <div class="col-xs-12 form-group-title">
+        <label class="group">用户信息</label>
+        <hr>
+    </div>
+    <div class="col-xs-6">
+        <label for="userId" class="control-label">用户名</label>
+        <input type="input" ng-model="restaurantAdminForm.userId" class="form-control" id="userId" placeholder="用户名"
+               required="required" name="userId">
+
+        <div ng-show="restaurantAdminFormValidation.userId.$error.required&&submitted"
+             class="alert alert-danger">
+            用户名不能为空
+        </div>
+    </div>
+    <div class="col-xs-3">
+        <label for="password" class="control-label">密码</label>
+
+        <input type="password" ng-model="restaurantAdminForm.password" class="form-control" id="password"
+               placeholder="密码" required
+               name="password">
+
+        <div ng-show="restaurantAdminFormValidation.password.$error.required&&submitted"
+             class="alert alert-danger">
+            邮件不能为空
+        </div>
+    </div>
+    <div class="col-xs-3">
+        <label for="again-password" class="control-label">确认密码</label>
+
+        <input type="password" ng-model="restaurantAdminForm.againPassword" class="form-control" id="again-password"
+               placeholder="确认密码" required
+               name="againPassword">
+
+        <div ng-show="restaurantAdminFormValidation.againPassword.$error.required&&submitted"
+             class="alert alert-danger">
+            确认密码不能为空
+        </div>
+        <div ng-show="restaurantAdminForm.againPassword!==restaurantAdminForm.password&&submitted"
+             class="alert alert-danger">
+            两次密码不一致
+        </div>
+    </div>
+    <hr class="space"/>
+    <div class="col-xs-3">
+        <label for="name" class="control-label">姓名</label>
+        <input type="input" ng-model="restaurantAdminForm.name" class="form-control" id="name" placeholder="姓名"
+               required="required" name="name">
+
+        <div ng-show="restaurantAdminFormValidation.name.$error.required&&submitted"
+             class="alert alert-danger">
+            姓名不能为空
+        </div>
+    </div>
+    <div class="col-xs-3">
+        <label for="email" class=" control-label">邮件</label>
+
+        <input type="email" ng-model="restaurantAdminForm.email" class="form-control" id="email" placeholder="邮件"
+               name="email" required>
+
+        <div ng-show="restaurantAdminFormValidation.email.$error.required&&submitted"
+             class="alert alert-danger">
+            邮件不能为空
+        </div>
+        <div ng-show="restaurantAdminFormValidation.email.$error.email&&submitted"
+             class="alert alert-danger">
+            请填写正确的邮件地址
+        </div>
+    </div>
+
+    <div class="col-xs-4">
+        <label for="phone" class=" control-label">手机</label>
+
+        <input type="input" ng-model="restaurantAdminForm.phone" class="form-control" id="phone"
+               placeholder="手机"
+               required="required" name="phone">
+
+        <div ng-show="restaurantAdminFormValidation.phone.$error.required&&submitted"
+             class="alert alert-danger">
+            手机不能为空
+        </div>
+    </div>
+
+    <hr class="space"/>
+    <div class="col-xs-12">
+        <div class="">
+            <button type="submit" class="btn btn-info" form="restaurant-admin-add-form"
+                    ng-disabled="addStatus===REQUEST_STATUS.ING" ng-if="mode==MODE.ADD">
+                注册<span ng-show="addStatus===REQUEST_STATUS.ING">中...</span>
+            </button>
+            <!--<button type="submit" class="btn btn-info" form="restaurant-admin-add-form"-->
+            <!--ng-disabled="addStatus===REQUEST_STATUS.ING" ng-if="mode==MODE.EDIT">-->
+            <!--修改<span ng-show="addStatus===REQUEST_STATUS.ING">中...</span>-->
+            <!--</button>-->
+        </div>
+    </div>
+</form>

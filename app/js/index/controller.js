@@ -77,6 +77,10 @@ define(function (require) {
                     {
                         name: "注册餐厅",
                         action: "/restaurant/restaurant-add/null"
+                    },
+                    {
+                        name: "注册餐厅管理员",
+                        action: "/restaurant/restaurant-admin-add/null"
                     }
                 ]
             },

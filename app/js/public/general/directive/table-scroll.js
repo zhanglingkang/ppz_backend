@@ -18,7 +18,7 @@ define(function (require, exports, module) {
                                         $(this).find("td:nth-child(" + (i + 1) + ")").each(function () {
 //                                                $(this).css({left: scrollLeft + "px", position: "relative"});
                                                 $(this).css({
-                                                    transform: $(this)[0].style.transform.replace(/translateX\(.*\)/g, "") + " translateX(" + scrollLeft + "px)",
+                                                    transform: $(this)[0].style.transform.replace(/translateX\(.*?\)/g, "") + " translateX(" + scrollLeft + "px)",
                                                     position: "relative"
                                                 })
 
@@ -40,24 +40,26 @@ define(function (require, exports, module) {
                     trCount = parseInt(attrs.tr);
                     $(window).scroll(function () {
                         var top = $elem[0].getBoundingClientRect().top;
+                        if (top === $elem[0].__lastTop) {
+                            return;
+                        }
+                        $elem[0].__lastTop = top;
                         $elem.find("tr").each(function (index) {
                                 if (index === trCount) {
                                     return false;
                                 }
-                                if (top < 0) {
-//                                    $(this).find("td").css({top: -top + "px", position: "relative"});
-//                                    $(this).find("td").css({transform: "translateY(" + (-top) + "px)", position: "relative"});
-                                    $(this).find("td").css({
-                                        transform: $(this)[0].style.transform.replace(/translateY\(.*\)/g, "") + " translateY(" + -top + "px)",
+                                top = top > 0 ? 0 : top;
+                                $(this).find("td").each(function () {
+                                    $(this).css({
+                                        transform: $(this)[0].style.transform.replace(/translateY\(.*?\)/g, "") + " translateY(" + -top + "px)",
                                         position: "relative"
                                     })
-                                    $(this).find("td").addClass("vertical-fix");
-                                } else {
-                                    $(this).find("td").css({
-                                        transform: $(this)[0].style.transform.replace(/translateY\(.*\)/g, "") + " translateY(" + 0 + "px)"
-                                    })
-                                    $(this).find("td").removeClass("vertical-fix");
-                                }
+                                    if (top === 0) {
+                                        $(this).removeClass("vertical-fix");
+                                    } else {
+                                        $(this).addClass("vertical-fix");
+                                    }
+                                });
                             }
                         )
                     });

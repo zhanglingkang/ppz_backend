@@ -1,40 +1,20 @@
-<!--<form class="form-inline" role="form" name="searchRestaurantFormValidation"-->
-<!--ng-submit="search()">-->
-<!--<div class="row">-->
-<!--<div class="col-xs-5">-->
-<!--<div class="form-group"-->
-<!--ng-class="{'has-error':searchRestaurantFormValidation.status.$invalid&&submitted,'has-success':searchRestaurantFormValidation.status.$valid&&submitted}">-->
-<!--<label class="control-label" for="status">专题状态&nbsp;</label>-->
-<!--&lt;!&ndash;<input type="date" class="form-control" id="date" placeholder="选择查看日期">&ndash;&gt;-->
-<!--<select class="form-control" name="status" ng-model="searchForm.status"-->
-<!--id="status">-->
-<!--<option value="">全部</option>-->
-<!--<option value="4">等待发布</option>-->
-<!--<option value="1">发布中</option>-->
-<!--<option value="3">草稿</option>-->
-<!--&lt;!&ndash;<option value="4">草稿</option>&ndash;&gt;-->
-<!--</select>-->
-<!--</div>-->
-<!--</div>-->
-<!--<div class="col-xs-5">-->
-<!--<div class="form-group">-->
-<!--<label for="title">专题名称&nbsp;</label>-->
-<!--<input type="text" class="form-control" placeholder="专题名称" ng-model="searchForm.title" id="title">-->
-<!--</div>-->
-<!--</div>-->
-<!--<div class="col-xs-2">-->
-<!--<button type="submit" class="btn btn-primary">查询</button>-->
-<!--<a class="btn btn-primary" ng-click="importRestaurant()" ng-disabled="loading"><span-->
-<!--ng-show="!loading">导入</span> <span-->
-<!--ng-show="loading">导入中...</span></a>-->
-<!--</div>-->
-<!--</div>-->
-<!--</form>-->
+<form class="form-inline" role="form" name="searchFormValidation" novalidate="">
+    <div class="row">
+        <div class="col-xs-5">
+            <div class="form-group">
+                <input type="text" class="form-control" placeholder="餐厅名称" ng-model="searchForm.name"
+                       id="title">
+            </div>
+        </div>
+        <!--<div class="col-xs-2">-->
+        <!--<button type="submit" class="btn btn-primary">查询</button>-->
+        <!--</div>-->
+    </div>
+</form>
 <hr/>
 <div class="panel panel-info">
     <div class="panel-heading text-center">
         <label>餐厅列表</label></div>
-    <!--<span ng-show="restaurantList.length!=0">（{{boutique.status}}）</span>-->
     <div class="panel-body restaurant-list">
         <div class="restaurant-table-container" x-table-scroll td="3" tr="2">
             <table class="table table-bordered table-hover ">
@@ -78,14 +58,16 @@
                 <!--<tr ng-show="getRestaurantListStatus===REQUEST_STATUS.REQUEST_FAILED">-->
                 <!--<td colspan="10" class="text-center table-hint">查询失败，请重新加载</td>-->
                 <!--</tr>-->
-                <tr ng-repeat="restaurant in restaurantList" class="no-scroll">
+                <tr ng-repeat="restaurant in restaurantList|filter:searchForm:strict" class="no-scroll">
                     <td>
                         <div class="btn-group btn-group-sm">
                             <a type="button" class="btn btn-default"
                                ng-href="#/restaurant/restaurant-add/{{restaurant.restaurantId}}">编辑
                             </a>
-                            <a type="button" class="btn btn-default"
-                                    >重置密码
+                            <!--<a type="button" class="btn btn-default">重置密码-->
+                            <!--</a>-->
+                            <a type="button" class="btn btn-default" data-toggle="modal"
+                               data-target="#user-list-modal" ng-click="selectRestaurant(restaurant)">指派餐厅管理员
                             </a>
                             <a type="button" class="btn btn-default"
                                ng-click="deleteRestaurant(restaurant.restaurantId)"
@@ -131,4 +113,35 @@
         </div>
     </div>
 </div>
+</div>
+<div class="modal fade" x-delete-modal id="user-list-modal" tabindex="-1" role="dialog"
+     aria-hidden="true" ng-show="showUserList">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
+                        class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="myModalLabel">用户列表</h4>
+            </div>
+            <div class="modal-body">
+                <table class="table table-bordered table-hover">
+                    <tr class="center" ng-show="!assignedUser.userId" ng-class="{'danger':wantAssign}">
+                        <td>请选择一个用户</td>
+                    </tr>
+                    <tr ng-repeat="user in userList" ng-class="{'success':user.userId===assignedUser.userId}"
+                        ng-click="selectUser(user)">
+                        <td>{{user.userId}}</td>
+                        <!--<td>{{user.phone}}</td>-->
+                        <!--<td>{{user.email}}</td>-->
+                        <!--<td>{{user.name}}</td>-->
+                    </tr>
+
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary" ng-click="assignUser()"> 确定
+                </button>
+            </div>
+        </div>
+    </div>
 </div>

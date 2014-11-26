@@ -5,6 +5,7 @@ define(function (require, exports, module) {
     var system = require("public/local/system");
     require("index/controller");
     require("restaurant/restaurant-add/controller");
+    require("restaurant/restaurant-admin-add/controller");
     require("restaurant/restaurant-list/controller");
     require("menu/menu-list/controller");
     require("user/user-list/controller");
@@ -21,6 +22,10 @@ define(function (require, exports, module) {
             when('/restaurant/restaurant-add/:id', {
                 controller: "restaurantAddCtrl",
                 templateUrl: system.getTplAbsolutePath("restaurant/restaurant-add.html")
+            }).
+            when('/restaurant/restaurant-admin-add/:id', {
+                controller: "restaurantAdminAddCtrl",
+                templateUrl: system.getTplAbsolutePath("restaurant/restaurant-admin-add.html")
             }).
             when("/menu/menu-list/", {
                 controller: "menuListCtrl",

@@ -7,7 +7,8 @@ define(function (require, exports, module) {
     require("public/general/directive/table-scroll");
     require("public/general/directive/confirm-hint");
     require("public/general/directive/tooltip");
-    app.controller("restaurantListCtrl", ['$scope', "$routeParams", "publicService", "restaurantListService", function ($scope, $routeParams, publicService, restaurantListService) {
+    require("./directive");
+    app.controller("restaurantListCtrl", ['$scope', "$routeParams", "publicService", "restaurantListService", "userListService", function ($scope, $routeParams, publicService, restaurantListService, userListService) {
         restaurantListService.getRestaurantList().success(function (data) {
             $scope.restaurantList = data.results;
         });
@@ -17,6 +18,31 @@ define(function (require, exports, module) {
         };
         $scope.searchResult = {
             restaurantList: []
+        };
+        $scope.searchForm = {
+            name: ""//餐厅名称
+        };
+        $scope.showUserList = false;
+        $scope.assignedUser = {};
+        $scope.selectUser = function (user) {
+            $scope.assignedUser = user;
+        };
+        userListService.getUserList().success(function (data) {
+            $scope.userList = data.results;
+        });
+        $scope.selectRestaurant = function (restaurant) {
+            $scope.assignedRestaurant = restaurant;
+            $scope.assignedUser = {};
+            $scope.showUserList = true;
+            $scope.wantAssign = false;
+        };
+        $scope.assignUser = function () {
+            $scope.wantAssign = true;
+            if ($scope.assignedUser.userId) {
+                restaurantListService.assignManagingRestaurantToUser($scope.assignedUser.userId, $scope.assignedRestaurant.restaurantId).success(function () {
+                    $scope.showUserList = false;
+                });
+            }
         };
         $scope.$on("searchStart", function () {
             $scope.searchStatus = $scope.SEARCH_STATUS.SEARCHING;
