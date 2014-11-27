@@ -37,6 +37,7 @@ define(function (require, exports, module) {
                         $scope.restaurantForm[key] = restaurant[key];
                     }
                 });
+                $scope.restaurantForm["phone.number"]= restaurant.phone.phone;
             });
         }
         $scope.addStatus = $scope.REQUEST_STATUS.INIT;
@@ -145,7 +146,7 @@ define(function (require, exports, module) {
                 name: "",
                 //"phone.country":null,
                 //"phone.area":703,
-                //"phone.number":5527382,
+                "phone.number":"",
                 //"phone.extension":null,
                 restaurantId: "",
                 email: "",

@@ -8,7 +8,7 @@ define(function (require, exports, module) {
         return {
             login: function (userName, password) {
                 return  httpService.post({
-                    command: "login",
+                    command: "loginAdmin",
                     data: {
                         userId: userName, password: password
                     }
