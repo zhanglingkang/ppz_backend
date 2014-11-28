@@ -61,6 +61,7 @@ table thead td {
 
 .restaurant-table-container {
     overflow-y: auto;
+    max-height: 600px;
 }
 
 td.vertical-fix, td.horizontal-fix {

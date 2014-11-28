@@ -2,6 +2,7 @@
 
 define(function (require, exports, module) {
     var app = require("app");
+    require("../jquery-plugin/scroll");
     app.directive("tableScroll", function () {
         return {
             restrict: "A",
@@ -11,7 +12,7 @@ define(function (require, exports, module) {
                 var trCount;
                 if (attrs.td) {
                     tdCount = parseInt(attrs.td);
-                    $elem.scroll(function () {
+                    $elem.scrollHorizontal(function () {
                             var scrollLeft = $elem[0].scrollLeft;
                             $elem.find("table tr.no-scroll").each(function () {
                                     for (var i = 0; i < tdCount; ++i) {
@@ -38,23 +39,20 @@ define(function (require, exports, module) {
                 }
                 if (attrs.tr) {
                     trCount = parseInt(attrs.tr);
-                    $(window).scroll(function () {
-                        var top = $elem[0].getBoundingClientRect().top;
-                        if (top === $elem[0].__lastTop) {
-                            return;
-                        }
-                        $elem[0].__lastTop = top;
+                    $elem.scrollVertical(function () {
+                        var containerTop = $elem[0].getBoundingClientRect().top;
+                        var tableTop = $elem.find("table")[0].getBoundingClientRect().top;
+                        var offset = containerTop - tableTop;
                         $elem.find("tr").each(function (index) {
                                 if (index === trCount) {
                                     return false;
                                 }
-                                top = top > 0 ? 0 : top;
                                 $(this).find("td").each(function () {
                                     $(this).css({
-                                        transform: $(this)[0].style.transform.replace(/translateY\(.*?\)/g, "") + " translateY(" + -top + "px)",
+                                        transform: $(this)[0].style.transform.replace(/translateY\(.*?\)/g, "") + " translateY(" + offset + "px)",
                                         position: "relative"
                                     })
-                                    if (top === 0) {
+                                    if (offset === 0) {
                                         $(this).removeClass("vertical-fix");
                                     } else {
                                         $(this).addClass("vertical-fix");

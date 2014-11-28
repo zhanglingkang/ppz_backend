@@ -36,6 +36,11 @@ define(function (require, exports, module) {
             $scope.showUserList = true;
             $scope.wantAssign = false;
         };
+        $scope.viewRestaurantAdmin = function (restaurant) {
+            restaurantListService.getRestaurantAdmin(restaurant.restaurantId).success(function (data) {
+                $scope.restaurantAdminList = data.results;
+            });
+        };
         $scope.assignUser = function () {
             $scope.wantAssign = true;
             if ($scope.assignedUser.userId) {

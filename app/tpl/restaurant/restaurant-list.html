@@ -69,6 +69,8 @@
                             <a type="button" class="btn btn-default" data-toggle="modal"
                                data-target="#user-list-modal" ng-click="selectRestaurant(restaurant)">指派餐厅管理员
                             </a>
+                            <a class="btn btn-default" data-toggle="modal" data-target="#restaurant-admin-list-modal"
+                               ng-click="viewRestaurantAdmin(restaurant)">查看餐厅管理员</a>
                             <a type="button" class="btn btn-default"
                                ng-click="deleteRestaurant(restaurant.restaurantId)"
                                x-confirm-hint
@@ -141,6 +143,34 @@
             <div class="modal-footer">
                 <button type="submit" class="btn btn-primary" ng-click="assignUser()"> 确定
                 </button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" x-delete-modal id="restaurant-admin-list-modal" tabindex="-1" role="dialog"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
+                        class="sr-only">Close</span></button>
+                <h4 class="modal-title">餐厅管理员列表</h4>
+            </div>
+            <div class="modal-body">
+                <table class="table table-bordered table-hover">
+                    <tr>
+                        <th>用户名</th>
+                        <th>姓名</th>
+                        <th>手机</th>
+                        <th>邮箱</th>
+                    </tr>
+                    <tr ng-repeat="user in restaurantAdminList">
+                        <td>{{user.userId}}</td>
+                        <td>{{user.name}}</td>
+                        <td>{{user.phone}}</td>
+                        <td>{{user.email}}</td>
+                    </tr>
+                </table>
             </div>
         </div>
     </div>

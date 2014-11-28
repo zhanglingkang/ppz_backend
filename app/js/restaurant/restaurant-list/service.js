@@ -41,6 +41,15 @@ define(function (require, exports, module) {
                 }).success(function (data) {
                 });
             },
+            getRestaurantAdmin: function (restaurantId) {
+                return httpService.post({
+                    command: "getRestaurantAdmins",
+                    data: {
+                        restaurantId: restaurantId
+                    }
+                }).success(function (data) {
+                });
+            },
             /**
              * @param {String} userId
              * @param {String} restaurantId
