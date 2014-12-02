@@ -50,6 +50,19 @@ define(function (require, exports, module) {
                 }).success(function (data) {
                 });
             },
+            removeManagingRestaurantFromUser: function (userId, restaurantId) {
+                return httpService.post({
+                    command: "removeManagingRestaurantFromUser",
+                    data: {
+                        restaurantId: restaurantId,
+                        userId: userId
+                    }
+                }).success(function (data) {
+                    pubSub.publish("businessSuccess", {
+                        msg: "解除成功！"
+                    });
+                });
+            },
             /**
              * @param {String} userId
              * @param {String} restaurantId

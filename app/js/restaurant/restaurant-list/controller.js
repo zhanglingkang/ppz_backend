@@ -40,6 +40,13 @@ define(function (require, exports, module) {
             restaurantListService.getRestaurantAdmin(restaurant.restaurantId).success(function (data) {
                 $scope.restaurantAdminList = data.results;
             });
+            $scope.removeManagingRestaurantFromUser = function (user) {
+                restaurantListService.removeManagingRestaurantFromUser(user.userId, restaurant.restaurantId).success(function () {
+                    $scope.restaurantAdminList = $scope.restaurantAdminList.filter(function (item) {
+                        return item.userId !== user.userId;
+                    })
+                });
+            }
         };
         $scope.assignUser = function () {
             $scope.wantAssign = true;

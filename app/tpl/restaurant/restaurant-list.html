@@ -159,12 +159,16 @@
             <div class="modal-body">
                 <table class="table table-bordered table-hover">
                     <tr>
+                        <th>操作</th>
                         <th>用户名</th>
                         <th>姓名</th>
                         <th>手机</th>
                         <th>邮箱</th>
                     </tr>
                     <tr ng-repeat="user in restaurantAdminList">
+                        <td>
+                            <button class="btn btn-info" ng-click="removeManagingRestaurantFromUser(user)">解除绑定</button>
+                        </td>
                         <td>{{user.userId}}</td>
                         <td>{{user.name}}</td>
                         <td>{{user.phone}}</td>
