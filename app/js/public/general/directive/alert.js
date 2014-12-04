@@ -3,7 +3,7 @@
 define(function (require, exports, module) {
     var app = require("app");
     var system = require("public/local/system");
-    app.directive("alert", ["$timeout", function ($timeout) {
+    app.directive("selfAlert", ["$timeout", function ($timeout) {
         return {
             restrict: "E",
             replace: true,

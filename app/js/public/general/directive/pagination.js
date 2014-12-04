@@ -4,7 +4,7 @@ define(function (require, exports, module) {
     var app = require("app");
     var system = require("public/local/system");
     require("public/local/http");
-    app.directive("pagination", ["httpService", function (httpService) {
+    app.directive("selfPagination", ["httpService", function (httpService) {
         return {
             restrict: "E",
             replace: true,

@@ -7,14 +7,42 @@ define(function (require, exports, module) {
     require("public/general/directive/table-scroll");
     require("public/general/directive/confirm-hint");
     require("public/general/directive/tooltip");
+    require("public/general/directive/full-tr");
     require("./directive");
-    app.controller("restaurantListCtrl", ['$scope', "$routeParams", "publicService", "restaurantListService", "userListService", function ($scope, $routeParams, publicService, restaurantListService, userListService) {
-        restaurantListService.getRestaurantList().success(function (data) {
-            $scope.restaurantList = data.results;
+    var restaurantListCtrl = ['$scope', "$routeParams", "$modal", "publicService", "restaurantListService", "userListService", function ($scope, $routeParams, $modal, publicService, restaurantListService, userListService) {
+        var userIdChange = false;
+
+        function loadRestaurantList() {
+            $scope.loadRestaurantListStatus = $scope.REQUEST_STATUS.ING;
+            restaurantListService.getRestaurantList().success(function (data) {
+                $scope.restaurantList = data.results;
+                $scope.loadRestaurantListStatus = $scope.REQUEST_STATUS.SUCCESSED;
+            }).error(function () {
+                $scope.loadRestaurantListStatus = $scope.REQUEST_STATUS.FAILED;
+            });
+        }
+
+        loadRestaurantList();
+        $scope.userId = "";
+        $scope.restaurantName = "";
+        $scope.search = function () {
+            $scope.searchForm.name = $scope.restaurantName;
+            $scope.searchByUserId();
+        };
+        $scope.$watch("userId", function (newValue) {
+            userIdChange = true;
         });
-        $scope.searchForm = {
-            status: "",
-            title: ""
+        $scope.searchByUserId = function () {
+            if (userIdChange) {
+                userIdChange = false;
+                if ($scope.userId) {
+                    restaurantListService.searchByUserId($scope.userId).success(function (data) {
+                        $scope.restaurantList = data.results;
+                    });
+                } else {
+                    loadRestaurantList();
+                }
+            }
         };
         $scope.searchResult = {
             restaurantList: []
@@ -27,8 +55,10 @@ define(function (require, exports, module) {
         $scope.selectUser = function (user) {
             $scope.assignedUser = user;
         };
+
         userListService.getUserList().success(function (data) {
             $scope.userList = data.results;
+        }).error(function () {
         });
         $scope.selectRestaurant = function (restaurant) {
             $scope.assignedRestaurant = restaurant;
@@ -37,16 +67,16 @@ define(function (require, exports, module) {
             $scope.wantAssign = false;
         };
         $scope.viewRestaurantAdmin = function (restaurant) {
-            restaurantListService.getRestaurantAdmin(restaurant.restaurantId).success(function (data) {
-                $scope.restaurantAdminList = data.results;
+            var modalInstance = $modal.open({
+                templateUrl: "restaurant-admin-list.html",
+                controller: "restaurantAdminListCtrl",
+//                backdrop: false,
+                resolve: {
+                    restaurant: function () {
+                        return angular.copy(restaurant);
+                    }
+                }
             });
-            $scope.removeManagingRestaurantFromUser = function (user) {
-                restaurantListService.removeManagingRestaurantFromUser(user.userId, restaurant.restaurantId).success(function () {
-                    $scope.restaurantAdminList = $scope.restaurantAdminList.filter(function (item) {
-                        return item.userId !== user.userId;
-                    })
-                });
-            }
         };
         $scope.assignUser = function () {
             $scope.wantAssign = true;
@@ -66,9 +96,6 @@ define(function (require, exports, module) {
         $scope.$on("searchFail", function () {
             $scope.searchStatus = $scope.SEARCH_STATUS.SEARCH_FAILED;
         });
-        $scope.search = function () {
-            //$scope.paginationScope.goPage(1);
-        };
         $scope.deleteRestaurant = function (restaurantId) {
             restaurantListService.deleteRestaurant(restaurantId).success(function () {
                     $scope.restaurantList = $scope.restaurantList.filter(function (restaurant) {
@@ -81,16 +108,6 @@ define(function (require, exports, module) {
             );
         };
 
-        $scope.moveUp = function (id, position) {
-            restaurantListService.moveUp(id, position, function () {
-                $scope.paginationScope.goPage();
-            });
-        };
-        $scope.moveDown = function (id, position) {
-            restaurantListService.moveDown(id, position, function () {
-                $scope.paginationScope.goPage();
-            });
-        };
         $scope.sortRestaurant = function (sortList, dragParam, dragId) {
             var data = {};
             sortList.some(function (value) {
@@ -105,12 +122,24 @@ define(function (require, exports, module) {
                 $scope.paginationScope.goPage();
             });
         };
-//        $scope.$watch("paginationScope", function () {
-//            if ($scope.paginationScope) {
-//                $scope.paginationScope.searchForm = $scope.searchForm;
-//                $scope.paginationScope.searchInterface = "special/index";
-//                $scope.paginationScope.goPage(1);
-//            }
-//        });
-    }]);
+    }];
+    var restaurantAdminListCtrl = ['$scope', 'restaurantListService', '$modalInstance', 'restaurant', function ($scope, restaurantListService, $modalInstance, restaurant) {
+        $scope.loadAdminListStatus = $scope.REQUEST_STATUS.ING;
+        $scope.restaurantAdminList = [];
+        restaurantListService.getRestaurantAdmin(restaurant.restaurantId).success(function (data) {
+            $scope.restaurantAdminList = data.results;
+            $scope.loadAdminListStatus = $scope.REQUEST_STATUS.SUCCESSED;
+        }).error(function () {
+            $scope.loadAdminListStatus = $scope.REQUEST_STATUS.FAILED;
+        });
+        $scope.removeManagingRestaurantFromUser = function (user) {
+            restaurantListService.removeManagingRestaurantFromUser(user.userId, restaurant.restaurantId).success(function () {
+                $scope.restaurantAdminList = $scope.restaurantAdminList.filter(function (item) {
+                    return item.userId !== user.userId;
+                })
+            });
+        };
+    }];
+    app.controller("restaurantListCtrl", restaurantListCtrl);
+    app.controller("restaurantAdminListCtrl", restaurantAdminListCtrl);
 });

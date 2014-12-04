@@ -4,5 +4,5 @@
  */
 
 define(function (require) {
-    return angular.module('bmsIPad', ['ngRoute', "ngCookies"]);
+    return angular.module('ppz', ['ngRoute', 'ngCookies', 'ui.bootstrap']);
 });

@@ -6,13 +6,9 @@
     <meta charset='utf-8'>
     <title ng-bind="name"></title>
 
-    <!--<link rel="stylesheet" href="http://docs.bootcss.com/bootstrap-2.3.2/docs/assets/css/bootstrap.css" media="all"/>-->
-    <!--<link rel="stylesheet" href="http://js.wanmeiyueyu.com/public/bootstrap/3.2.0/css/bootstrap.min.css" media="all"/>-->
     <link data-remove rel="stylesheet" href="css/bootstrap.min.css" media="all"/>
-    <!--<link data-remove rel="stylesheet" href="css/bootstrap.simplex.min.css" media="all"/>-->
     <link data-remove rel="stylesheet" href="css/bootstrap-datetimepicker.min.css"
           media="all">
-    <!--<link data-remove rel="stylesheet" href="http://js.wanmeiyueyu.com/bms-kyipad/css/editor.css" media="all"/>-->
     <link data-remove rel="stylesheet" href="css/font-awesome.css" media="all"/>
     <link data-remove rel="stylesheet" href="css/base.css">
     <link data-remove data-replace rel="stylesheet" href="css/app.css">
@@ -78,11 +74,11 @@
 <div ng-include="loginTemplate" ng-if="!isLogin()">
 
 </div>
-<x-alert
+<x-self-alert
         style="position:fixed;left:0;right:0;bottom:0;min-height: 100px;margin-bottom: 0;z-index: 100;"
         x-show="alertShow" x-show-type="alertType" x-no-auto-hide="noAutoHide">
     <p class="text-center"><strong>{{alertContent}}</strong></p>
-</x-alert>
+</x-self-alert>
 <div class="modal" id="modal-hint" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -119,6 +115,7 @@
 <footer></footer>
 <script data-remove src="bower_components/seajs/dist/sea-debug.js"></script>
 <script data-remove src="bower_components/angularjs/angular.js"></script>
+<script data-remove src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
 <script data-remove src="bower_components/angularjs/angular-cookies.js"></script>
 <script data-remove src="bower_components/angularjs/angular-route.js"></script>
 <script data-remove src="bower_components/jquery/dist/jquery.js"></script>

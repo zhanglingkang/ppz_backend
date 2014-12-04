@@ -7,6 +7,16 @@ define(function (require, exports, module) {
     app.service("restaurantListService", ["httpService", function (httpService) {
         var restaurantList = [];
         return {
+            searchByUserId: function (userId) {
+                return httpService.post({
+                    command: "getManagingResturantByUser",
+                    data: {
+                        name: userId
+                    }
+                }).success(function (data) {
+                    restaurantList = data.results;
+                });
+            },
             getRestaurantList: function () {
                 return httpService.post({
                     command: "getRestaurantInfoList",

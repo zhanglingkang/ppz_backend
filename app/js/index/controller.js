@@ -11,7 +11,29 @@ define(function (require) {
     require("public/general/directive/alert");
     var system = require("public/local/system");
     require("public/local/share");
-    app.controller("appInfoCtrl", ["$window", "$scope", "$cookies", "shareDataService", "systemInfoService", "httpService", function ($window, $scope, $cookies, shareDataService, systemInfoService, httpService) {
+    app.controller("appInfoCtrl", ["$window", "$scope", "$cookies", "$rootScope", "systemInfoService", "httpService", function ($window, $scope, $cookies, $rootScope, systemInfoService, httpService) {
+
+        /**
+         * 任何一个请求都有四种状态：INIT 尚未请求 REQUESTING 请求中 REQUEST_SUCCESSED 请求成功 REQUEST_FAILED 请求失败
+         */
+        $rootScope.REQUEST_STATUS = {
+            INIT: 0,
+            ING: 1,
+            SUCCESSED: 2,
+            FAILED: 3
+        };
+        $rootScope.KEY_CODE = {
+            ENTER: 13,
+            BACKSPACE: 8,
+            TOP: 38,
+            RIGHT: 39,
+            BOTTOM: 40,
+            LEFT: 37
+        };
+        $rootScope.MODE = {
+            EDIT: 1,
+            ADD: 2
+        };
         pubSub.subscribe("serverError", function (topicInfo) {
             $scope.alertShow = true;
             $scope.alertType = "alert-danger";
@@ -42,27 +64,6 @@ define(function (require) {
         $scope.loginTemplate = seajs.data.cwd + "tpl/login.html";
         $scope.getUserName = function () {
             return $scope.isLogin() ? $cookies.username : "";
-        };
-        /**
-         * 任何一个请求都有四种状态：INIT 尚未请求 REQUESTING 请求中 REQUEST_SUCCESSED 请求成功 REQUEST_FAILED 请求失败
-         */
-        $scope.REQUEST_STATUS = {
-            INIT: 0,
-            ING: 1,
-            SUCCESSED: 2,
-            FAILED: 3
-        };
-        $scope.KEY_CODE = {
-            ENTER: 13,
-            BACKSPACE: 8,
-            TOP: 38,
-            RIGHT: 39,
-            BOTTOM: 40,
-            LEFT: 37
-        };
-        $scope.MODE = {
-            EDIT: 1,
-            ADD: 2
         };
         $scope.name = "ppz管理系统";
         $scope.modules = [
