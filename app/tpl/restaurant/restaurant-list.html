@@ -27,7 +27,7 @@
                 <thead>
                 <tr class="center">
                     <td colspan="2"></td>
-                    <td colspan="11">餐厅公开信息</td>
+                    <td colspan="12">餐厅公开信息</td>
                     <td colspan="4">注册信息</td>
                 </tr>
                 <tr class="text no-scroll">
@@ -44,6 +44,7 @@
                     <td style="min-width: 120px;">市</td>
                     <td style="min-width: 60px;">省</td>
                     <td style="min-width: 60px;">邮编</td>
+                    <td style="min-width: 100px;">注册时间</td>
                     <td style="min-width: 100px;">法人代表</td>
                     <td style="min-width: 120px;">法人代表电话</td>
                     <td style="min-width: 100px;">负责人</td>
@@ -64,7 +65,8 @@
                 <tr ng-show="loadRestaurantListStatus===REQUEST_STATUS.FAILED">
                     <td class="text-center table-hint" full-tr>查询失败，请重新加载</td>
                 </tr>
-                <tr ng-repeat="restaurant in restaurantList|filter:searchForm:strict" class="no-scroll">
+                <tr ng-repeat="restaurant in restaurantList|filter:searchForm:strict|orderBy:'enrollTime':'true'"
+                    class="no-scroll">
                     <td>
                         <div class="btn-group btn-group-sm">
                             <a type="button" class="btn btn-default"
@@ -103,10 +105,11 @@
                     </td>
                     <td>{{restaurant.address.state}}</td>
                     <td>{{restaurant.address.zipcode}}</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td>{{restaurant.enrollTime|date:'yyyy-MM-dd'}}</td>
+                    <td>{{restaurant.legalPersonName}}</td>
+                    <td>{{restaurant.legalPersonPhone}}</td>
+                    <td>{{restaurant.pointOfContactName}}</td>
+                    <td>{{restaurant.pointOfContactPhone}}</td>
 
                 </tr>
                 </tbody>

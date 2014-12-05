@@ -13,7 +13,7 @@
                 <td>电邮</td>
                 <td>姓名</td>
                 <td>申请日期</td>
-                <td>最后登录时间</td>
+                <!--<td>最后登录时间</td>-->
             </tr>
             </thead>
             <!--x-drag-sort="data-drag-id" x-drag-completed="sortTopic"-->
@@ -27,7 +27,7 @@
             <!--<tr ng-show="getRestaurantListStatus===REQUEST_STATUS.REQUEST_FAILED">-->
             <!--<td colspan="10" class="text-center table-hint">查询失败，请重新加载</td>-->
             <!--</tr>-->
-            <tr ng-repeat="user in userList">
+            <tr ng-repeat="user in userList|orderBy:'enrollTime':'true'">
                 <td>
                     <div class="btn-group btn-group-sm">
                         <a class="btn btn-default" href="#/user/user-add/{{user.userId}}">修改</a>
@@ -40,8 +40,8 @@
                 <td>{{user.phone}}</td>
                 <td>{{user.email}}</td>
                 <td>{{user.name}}</td>
-                <td>{{user.name}}</td>
-                <td>{{user.name}}</td>
+                <td>{{user.enrollTime|date:'yyyy-MM-dd'}}</td>
+                <!--<td>{{user.name}}</td>-->
             </tr>
             </tbody>
         </table>
@@ -55,20 +55,3 @@
     </div>
 </div>
 </div>
-<template id="topic-lock-form" class="hide">
-    <form class="form-horizontal" name="lockPositionFormValidation"
-          ng-submit="lockPosition(lockPositionFormValidation.$valid,this)" novalidate="">
-        <div class="form-group"
-             ng-class="{'has-error':lockPositionFormValidation.lockPosition.$invalid&&lockPositionSubmitted,'has-success':lockPositionFormValidation.lockPosition.$valid&&lockPositionSubmitted}">
-            <div class="col-xs-12">
-                <input class="form-control" placeholder="专题锁定位置" type="number" ng-model="topic.lockPosition"
-                       name="lockPosition" required/>
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-sm-offset-8">
-                <button type="submit" class="btn btn-default">确定</button>
-            </div>
-        </div>
-    </form>
-</template>
