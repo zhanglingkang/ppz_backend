@@ -55,11 +55,11 @@ table thead td {
     font-weight: bold;
 }
 
-.restaurant-list table {
+.restaurant-list table, .user-list table {
     table-layout: auto;
 }
 
-.restaurant-table-container {
+.restaurant-table-container,.user-table-container{
     overflow-y: auto;
     max-height: 600px;
 }
