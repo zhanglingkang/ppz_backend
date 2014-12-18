@@ -74,7 +74,7 @@
     <!--专题名称为5-15个字符长度</p>-->
 </div>
 <div class="col-xs-8">
-    <label for="name" class=" control-label">餐厅描述</label>
+    <label for="description" class=" control-label">餐厅描述</label>
 
     <input type="input" ng-model="restaurantForm.restaurantDescription" class="form-control" id="description"
            placeholder="餐厅描述"
@@ -135,7 +135,7 @@
 <section ng-if="mode===MODE.EDIT">
     <hr class="space"/>
     <div class="col-xs-6">
-        <label for="imageLinkThumbnail" class=" control-label">餐厅小图标</label>
+        <label class=" control-label">餐厅小图标</label>
         <input type="file" name="imageLinkThumbnail" id="imageLinkThumbnail"
                data-preview-img="#thumbnail-preview-img" x-set-file="pictureFiles"
                x-file-type="image" x-file-required ng-model="xxxxx">
@@ -303,10 +303,10 @@
 </div>
 
 <hr class="space"/>
-<div class="col-xs-4">
+<div class="col-xs-4" ng-if="mode!==MODE.ADD">
     <label class="control-label">纬度</label>
     <input class="form-control" type="number" name="latitude" placeholder="纬度" ng-model="restaurantForm.latitude"
-           required=""/>
+           required="" disabled/>
 
     <div ng-show="restaurantFormValidation.latitude.$error.required&&submitted"
          class="alert alert-danger">
@@ -317,10 +317,10 @@
         请填写正确的格式
     </div>
 </div>
-<div class="col-xs-4">
+<div class="col-xs-4" ng-if="mode!==MODE.ADD">
     <label class="control-label">经度</label>
     <input class="form-control" type="number" name="longitude" placeholder="经度" ng-model="restaurantForm.longitude"
-           required/>
+           required disabled/>
 
     <div ng-show="restaurantFormValidation.longitude.$error.required&&submitted"
          class="alert alert-danger">
